@@ -10,8 +10,8 @@ using Ogani.Data;
 namespace Ogani.Migrations
 {
     [DbContext(typeof(OganiDbContext))]
-    [Migration("20220328072005_add_table_blog_update")]
-    partial class add_table_blog_update
+    [Migration("20220331043931_add_5cot_minh")]
+    partial class add_5cot_minh
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -125,14 +125,14 @@ namespace Ogani.Migrations
                         new
                         {
                             Id = new Guid("cc88ab6f-5d66-4c30-a60e-8f5254f1e112"),
-                            ConcurrencyStamp = "b0aa40e8-845d-41d5-bd35-a68ba6ca1a1b",
+                            ConcurrencyStamp = "e9fe1280-5719-450d-b0c0-95cd980984a4",
                             Name = "admin",
                             NormalizedName = "admin"
                         },
                         new
                         {
-                            Id = new Guid("af280dc0-c93e-4b64-a390-2c92dd700f02"),
-                            ConcurrencyStamp = "9954b7b5-8229-4d98-b13c-c9259956891d",
+                            Id = new Guid("3573908a-8a36-43f0-865d-04af479cea79"),
+                            ConcurrencyStamp = "f0b2def7-2759-4380-bfee-8c893c2f41a2",
                             Name = "employee",
                             NormalizedName = "employee"
                         });
@@ -210,14 +210,14 @@ namespace Ogani.Migrations
                         {
                             Id = new Guid("0027068e-4c5d-4ecb-a157-b9cc063cd672"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "b7d80b29-f3fa-4de5-88f4-d912b41f05ca",
+                            ConcurrencyStamp = "3deafc67-ffef-45a4-8143-ca36d5966275",
                             CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "admin@gmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "admin@gmail.com",
                             NormalizedUserName = "admin@gmail.com",
-                            PasswordHash = "AQAAAAEAACcQAAAAEJhNV86+iftbJ3LZP1QEe1wVGxWZc+RmvoNoaIk5hF/Bu8SGy/e5bp2oO9QgDLVAkA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEJBtCeeLxYLoH92qU15TZTzorliD+46JHm16G4ui4E+95pXFm6D3xQwCsh9obm95qg==",
                             PhoneNumber = "02002012",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
@@ -271,8 +271,7 @@ namespace Ogani.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId")
-                        .IsUnique();
+                    b.HasIndex("UserId");
 
                     b.ToTable("Blogs");
                 });
@@ -302,37 +301,37 @@ namespace Ogani.Migrations
                         },
                         new
                         {
-                            Id = new Guid("3bddb6eb-4649-482e-b047-6c7355707baa"),
+                            Id = new Guid("82d738ac-29b1-400d-8faf-2a9fef0124aa"),
                             Description = "",
                             Name = "Meat"
                         },
                         new
                         {
-                            Id = new Guid("97914234-c15e-4b46-8a79-86a6fd079028"),
+                            Id = new Guid("77b382e7-d906-4899-a348-49b334b77d84"),
                             Description = "",
                             Name = "Oranges"
                         },
                         new
                         {
-                            Id = new Guid("8d42442e-1380-4718-8f1b-168188dfff2d"),
+                            Id = new Guid("ae8fc1ae-64e5-4e7e-9cc6-14c2a2e2f447"),
                             Description = "",
                             Name = "Fastfood"
                         },
                         new
                         {
-                            Id = new Guid("b028f39d-2bea-4f72-bee3-6cb6cb27aba9"),
+                            Id = new Guid("71c2d88e-976e-47f9-bf2d-0790446af099"),
                             Description = "",
                             Name = "Fresh Bananas"
                         },
                         new
                         {
-                            Id = new Guid("12180db9-f0cd-4f49-942b-e7a209fb5762"),
+                            Id = new Guid("5ca1097c-6cf0-4358-bfbb-7618ded324e4"),
                             Description = "",
                             Name = "Drink Fruits"
                         },
                         new
                         {
-                            Id = new Guid("5eda00c0-61ee-4feb-b69e-964a36a08887"),
+                            Id = new Guid("cbdb92cd-6720-44ce-afa2-769540c669e9"),
                             Description = "",
                             Name = "Sea Food"
                         });
@@ -415,7 +414,7 @@ namespace Ogani.Migrations
                         new
                         {
                             Id = new Guid("ed040235-219c-48d8-a12d-3ae4d89a2fb9"),
-                            CreateAt = new DateTime(2022, 3, 28, 14, 20, 4, 403, DateTimeKind.Local).AddTicks(693),
+                            CreateAt = new DateTime(2022, 3, 31, 11, 39, 30, 570, DateTimeKind.Local).AddTicks(9284),
                             CurrentPrice = "100",
                             Description = "Feature",
                             Image = "/img/featured/feature-1.jpg",
@@ -427,12 +426,25 @@ namespace Ogani.Migrations
                         },
                         new
                         {
-                            Id = new Guid("b7916e0a-3cf0-4b3c-b373-70e6bc5bcf81"),
-                            CreateAt = new DateTime(2022, 3, 28, 14, 20, 4, 405, DateTimeKind.Local).AddTicks(4293),
+                            Id = new Guid("16844377-d714-4495-97b2-a22ce1873492"),
+                            CreateAt = new DateTime(2022, 3, 31, 11, 39, 30, 573, DateTimeKind.Local).AddTicks(1549),
                             CurrentPrice = "500",
                             Description = "Feature",
                             Image = "/img/featured/feature-2.jpg",
                             Name = "Feature-2",
+                            Rate = 0,
+                            ReducePrice = "200",
+                            SupplierId = new Guid("ab77aefb-5a93-4fa6-abfb-5c904d7ad5b8"),
+                            ToTalRemaining = 5
+                        },
+                        new
+                        {
+                            Id = new Guid("c6915541-583a-41cb-8c18-2226fb8c06a4"),
+                            CreateAt = new DateTime(2022, 3, 31, 11, 39, 30, 573, DateTimeKind.Local).AddTicks(1720),
+                            CurrentPrice = "500",
+                            Description = "huy",
+                            Image = "/store-image/eada9a7f-7472-4982-8575-8243f453859b.jpg",
+                            Name = "Feature-22fsdf",
                             Rate = 0,
                             ReducePrice = "200",
                             SupplierId = new Guid("ab77aefb-5a93-4fa6-abfb-5c904d7ad5b8"),
@@ -557,8 +569,8 @@ namespace Ogani.Migrations
             modelBuilder.Entity("Ogani.Data.Blog", b =>
                 {
                     b.HasOne("Ogani.Data.AppUser", "AppUser")
-                        .WithOne("Blog")
-                        .HasForeignKey("Ogani.Data.Blog", "UserId")
+                        .WithMany("Blogs")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -645,7 +657,7 @@ namespace Ogani.Migrations
                 {
                     b.Navigation("AppUserRoles");
 
-                    b.Navigation("Blog");
+                    b.Navigation("Blogs");
 
                     b.Navigation("Orders");
                 });

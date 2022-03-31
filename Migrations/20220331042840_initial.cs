@@ -163,6 +163,28 @@ namespace Ogani.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Blogs",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Content = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Image = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CreateAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Blogs", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Blogs_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Orders",
                 columns: table => new
                 {
@@ -283,19 +305,13 @@ namespace Ogani.Migrations
                 columns: new[] { "Id", "Description", "Name" },
                 values: new object[,]
                 {
-                    { new Guid("db953381-d9ce-4e17-8ec9-ec993a40228e"), "", "Fresh Berries" },
-                    { new Guid("4dad28e1-8f33-42ec-a170-780151fdca09"), "", "Drink Fruits" },
-                    { new Guid("b70a84d4-5b07-468b-ab9d-01f34ae68809"), "", "Fresh Bananas" },
                     { new Guid("695b5cdb-0992-488e-8963-e76093bb5905"), "", "Vegetables" },
-                    { new Guid("75905e32-0f69-4221-8149-5951642a5c28"), "", "Meat" },
-                    { new Guid("e13a15df-9c7a-42ef-a113-ae83944d6532"), "", "Oranges" },
-                    { new Guid("f9487041-c8e4-4f66-a83a-f454a9e63808"), "", "Fastfood" },
-                    { new Guid("fe202495-8a1a-4abb-abfd-38dcb6567199"), "", "Fruit & Nut Gifts" },
-                    { new Guid("52c7977f-b7aa-41b4-8aa4-a70ad14e5543"), "", "Sea Food" },
-                    { new Guid("6baa3a43-a231-4728-9027-78d56739cdcc"), "", "Ocean Foods" },
-                    { new Guid("b1b522a0-b716-425b-8323-050e1313bdeb"), "", "Butter & Eggs" },
-                    { new Guid("fc04176f-8a18-4a0f-95ba-171d932e7a9a"), "", "Fresh Onion" },
-                    { new Guid("0651b925-1aea-47f5-9d3c-9a6068719a5e"), "", "Oatmeal" }
+                    { new Guid("2bdda6d0-e9a5-47f1-8f3a-b60a82ecd386"), "", "Meat" },
+                    { new Guid("18cafd1d-14fb-4793-bc3a-4365d29c1c1b"), "", "Oranges" },
+                    { new Guid("d59851b9-72c7-4130-addf-2d814e626520"), "", "Fastfood" },
+                    { new Guid("0dedf8c9-ab72-4704-8ff3-3cfcd837fe9d"), "", "Fresh Bananas" },
+                    { new Guid("4b583ce3-c012-40bf-abf8-481ad6a64fc0"), "", "Drink Fruits" },
+                    { new Guid("c37e1492-d3e9-4596-8254-1f99f48dd256"), "", "Sea Food" }
                 });
 
             migrationBuilder.InsertData(
@@ -303,8 +319,8 @@ namespace Ogani.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { new Guid("cc88ab6f-5d66-4c30-a60e-8f5254f1e112"), "a4ba845b-2b89-453b-bb0d-89f9d88625cc", "admin", "admin" },
-                    { new Guid("99a2b12b-7840-416d-8cd3-ee56f0367815"), "ca9b01cd-329f-4828-a5af-8d80064be4c2", "employee", "employee" }
+                    { new Guid("cc88ab6f-5d66-4c30-a60e-8f5254f1e112"), "fcaf0e5c-fefa-4829-9d6e-185d575239aa", "admin", "admin" },
+                    { new Guid("4c6a0238-3939-4e7f-b378-2feab585c35d"), "785c0168-1c6e-4f53-9572-76de57d4a3d5", "employee", "employee" }
                 });
 
             migrationBuilder.InsertData(
@@ -315,17 +331,17 @@ namespace Ogani.Migrations
             migrationBuilder.InsertData(
                 table: "Users",
                 columns: new[] { "Id", "AccessFailedCount", "Avatar", "ConcurrencyStamp", "CreateAt", "DateOfBirth", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { new Guid("0027068e-4c5d-4ecb-a157-b9cc063cd672"), 0, null, "d9da6b5c-c532-4d33-9a82-1bbbda07848c", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "admin@gmail.com", true, null, null, false, null, "admin@gmail.com", "admin@gmail.com", "AQAAAAEAACcQAAAAENtR8OhnSNGCRHS1AHeIgbczFebbdDj3XRP2q1hg6JrQbNKrpb/2IOwIwjYNecRgRQ==", "02002012", false, "", false, "admin@gmail.com" });
+                values: new object[] { new Guid("0027068e-4c5d-4ecb-a157-b9cc063cd672"), 0, null, "f0e1eb14-9765-4f40-a984-334c011a7196", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "admin@gmail.com", true, null, null, false, null, "admin@gmail.com", "admin@gmail.com", "AQAAAAEAACcQAAAAEHtgXVQ6DydK0/2yUbDYeSydPQIbpN71grCgOIV6bK5sMRc8nZXsXHcMHHNJFyjiwA==", "02002012", false, "", false, "admin@gmail.com" });
 
             migrationBuilder.InsertData(
                 table: "Products",
                 columns: new[] { "Id", "CreateAt", "CurrentPrice", "Description", "Image", "Name", "Rate", "ReducePrice", "SupplierId", "ToTalRemaining" },
-                values: new object[] { new Guid("ed040235-219c-48d8-a12d-3ae4d89a2fb9"), new DateTime(2022, 3, 22, 0, 54, 4, 766, DateTimeKind.Local).AddTicks(2791), "100", "Feature", "/img/featured/feature-1.jpg", "Feature-1", 0, "200", new Guid("ab77aefb-5a93-4fa6-abfb-5c904d7ad5b8"), 5 });
+                values: new object[] { new Guid("ed040235-219c-48d8-a12d-3ae4d89a2fb9"), new DateTime(2022, 3, 31, 11, 28, 39, 672, DateTimeKind.Local).AddTicks(3811), "100", "Feature", "/img/featured/feature-1.jpg", "Feature-1", 0, "200", new Guid("ab77aefb-5a93-4fa6-abfb-5c904d7ad5b8"), 5 });
 
             migrationBuilder.InsertData(
                 table: "Products",
                 columns: new[] { "Id", "CreateAt", "CurrentPrice", "Description", "Image", "Name", "Rate", "ReducePrice", "SupplierId", "ToTalRemaining" },
-                values: new object[] { new Guid("f7504697-ba11-44f2-93d9-736849debe95"), new DateTime(2022, 3, 22, 0, 54, 4, 770, DateTimeKind.Local).AddTicks(583), "500", "Feature", "/img/featured/feature-2.jpg", "Feature-2", 0, "200", new Guid("ab77aefb-5a93-4fa6-abfb-5c904d7ad5b8"), 5 });
+                values: new object[] { new Guid("83d8c841-06bc-445d-ac1c-c17ea5e9104e"), new DateTime(2022, 3, 31, 11, 28, 39, 674, DateTimeKind.Local).AddTicks(1989), "500", "Feature", "/img/featured/feature-2.jpg", "Feature-2", 0, "200", new Guid("ab77aefb-5a93-4fa6-abfb-5c904d7ad5b8"), 5 });
 
             migrationBuilder.InsertData(
                 table: "UserRoles",
@@ -341,6 +357,11 @@ namespace Ogani.Migrations
                 table: "ProductImages",
                 columns: new[] { "Id", "Name", "ProductId" },
                 values: new object[] { new Guid("3c9a6cad-25cd-4aef-9d16-3f22d6d5d717"), "Feature-3", new Guid("ed040235-219c-48d8-a12d-3ae4d89a2fb9") });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Blogs_UserId",
+                table: "Blogs",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Orders_UserId",
@@ -375,6 +396,9 @@ namespace Ogani.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "Blogs");
+
             migrationBuilder.DropTable(
                 name: "ProductCategories");
 

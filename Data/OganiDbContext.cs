@@ -36,7 +36,7 @@ namespace Ogani.Data
                     ReducePrice = "200",
                     ToTalRemaining = 5,
                     Rate = 0,
-                    Image = "/img/featured/feature-1.jpg"
+                    Image = "/img/cam.jpg"
                 });
                 x.HasData(new Product()
                 {
@@ -49,6 +49,18 @@ namespace Ogani.Data
                     ReducePrice = "200",
                     ToTalRemaining = 5,
                     Image = "/img/featured/feature-2.jpg"
+                });
+                x.HasData(new Product()
+                {
+                    CreateAt = DateTime.Now,
+                    CurrentPrice = "500",
+                    Description = "huy",
+                    SupplierId = new Guid("ab77aefb-5a93-4fa6-abfb-5c904d7ad5b8"),
+                    Name = "Feature-22fsdf",
+                    Id = Guid.NewGuid(),
+                    ReducePrice = "200",
+                    ToTalRemaining = 5,
+                    Image = "/eada9a7f-7472-4982-8575-8243f453859b.jpg"
                 });
             });
             builder.Entity<ProductImage>(x =>
@@ -123,7 +135,7 @@ namespace Ogani.Data
                 Email = "admin@gmail.com",
                 NormalizedEmail = "admin@gmail.com",
                 EmailConfirmed = true,
-                PasswordHash = hasher.HashPassword(null, "Huylong@37"),
+                PasswordHash = hasher.HashPassword(null, "Btec123456"),
                 SecurityStamp = string.Empty,
                 PhoneNumber = "02002012",
             });

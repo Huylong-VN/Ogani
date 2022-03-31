@@ -123,14 +123,14 @@ namespace Ogani.Migrations
                         new
                         {
                             Id = new Guid("cc88ab6f-5d66-4c30-a60e-8f5254f1e112"),
-                            ConcurrencyStamp = "abb71ac1-83a3-4b23-9f21-6fd4fef7dc7f",
+                            ConcurrencyStamp = "e9fe1280-5719-450d-b0c0-95cd980984a4",
                             Name = "admin",
                             NormalizedName = "admin"
                         },
                         new
                         {
-                            Id = new Guid("4f64bb45-d9da-45e3-b183-3428978f1aff"),
-                            ConcurrencyStamp = "e871ecae-11bd-4d8e-9f45-bcde21a2b15a",
+                            Id = new Guid("3573908a-8a36-43f0-865d-04af479cea79"),
+                            ConcurrencyStamp = "f0b2def7-2759-4380-bfee-8c893c2f41a2",
                             Name = "employee",
                             NormalizedName = "employee"
                         });
@@ -208,14 +208,14 @@ namespace Ogani.Migrations
                         {
                             Id = new Guid("0027068e-4c5d-4ecb-a157-b9cc063cd672"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "ea778b82-832e-4751-973d-63434a516bd5",
+                            ConcurrencyStamp = "3deafc67-ffef-45a4-8143-ca36d5966275",
                             CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "admin@gmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "admin@gmail.com",
                             NormalizedUserName = "admin@gmail.com",
-                            PasswordHash = "AQAAAAEAACcQAAAAEFh00nSsTdryxDl9j6Rnz0VdEzKstswRSXUETBm6A3NczTmA1SOZCyn/KQ9NA9dU/w==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEJBtCeeLxYLoH92qU15TZTzorliD+46JHm16G4ui4E+95pXFm6D3xQwCsh9obm95qg==",
                             PhoneNumber = "02002012",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
@@ -299,37 +299,37 @@ namespace Ogani.Migrations
                         },
                         new
                         {
-                            Id = new Guid("87c9996c-d516-49cf-a2c7-5469a18ef21c"),
+                            Id = new Guid("82d738ac-29b1-400d-8faf-2a9fef0124aa"),
                             Description = "",
                             Name = "Meat"
                         },
                         new
                         {
-                            Id = new Guid("1b9aa9ca-1bcb-4457-b4c1-14ba19bbd34b"),
+                            Id = new Guid("77b382e7-d906-4899-a348-49b334b77d84"),
                             Description = "",
                             Name = "Oranges"
                         },
                         new
                         {
-                            Id = new Guid("a32f1fa2-fe32-499f-bca9-8befc680e855"),
+                            Id = new Guid("ae8fc1ae-64e5-4e7e-9cc6-14c2a2e2f447"),
                             Description = "",
                             Name = "Fastfood"
                         },
                         new
                         {
-                            Id = new Guid("fe229973-50ac-466a-9826-a1c8e1f2abc3"),
+                            Id = new Guid("71c2d88e-976e-47f9-bf2d-0790446af099"),
                             Description = "",
                             Name = "Fresh Bananas"
                         },
                         new
                         {
-                            Id = new Guid("e71aa24e-ae50-4f3a-abf7-9e7191dbe7a7"),
+                            Id = new Guid("5ca1097c-6cf0-4358-bfbb-7618ded324e4"),
                             Description = "",
                             Name = "Drink Fruits"
                         },
                         new
                         {
-                            Id = new Guid("3f34bfd9-dddc-4105-95f4-bc72186807f9"),
+                            Id = new Guid("cbdb92cd-6720-44ce-afa2-769540c669e9"),
                             Description = "",
                             Name = "Sea Food"
                         });
@@ -412,7 +412,7 @@ namespace Ogani.Migrations
                         new
                         {
                             Id = new Guid("ed040235-219c-48d8-a12d-3ae4d89a2fb9"),
-                            CreateAt = new DateTime(2022, 3, 30, 18, 19, 46, 506, DateTimeKind.Local).AddTicks(563),
+                            CreateAt = new DateTime(2022, 3, 31, 11, 39, 30, 570, DateTimeKind.Local).AddTicks(9284),
                             CurrentPrice = "100",
                             Description = "Feature",
                             Image = "/img/featured/feature-1.jpg",
@@ -424,12 +424,25 @@ namespace Ogani.Migrations
                         },
                         new
                         {
-                            Id = new Guid("ed25ad91-edf8-426d-b5b5-65f10fdb64e2"),
-                            CreateAt = new DateTime(2022, 3, 30, 18, 19, 46, 508, DateTimeKind.Local).AddTicks(3765),
+                            Id = new Guid("16844377-d714-4495-97b2-a22ce1873492"),
+                            CreateAt = new DateTime(2022, 3, 31, 11, 39, 30, 573, DateTimeKind.Local).AddTicks(1549),
                             CurrentPrice = "500",
                             Description = "Feature",
                             Image = "/img/featured/feature-2.jpg",
                             Name = "Feature-2",
+                            Rate = 0,
+                            ReducePrice = "200",
+                            SupplierId = new Guid("ab77aefb-5a93-4fa6-abfb-5c904d7ad5b8"),
+                            ToTalRemaining = 5
+                        },
+                        new
+                        {
+                            Id = new Guid("c6915541-583a-41cb-8c18-2226fb8c06a4"),
+                            CreateAt = new DateTime(2022, 3, 31, 11, 39, 30, 573, DateTimeKind.Local).AddTicks(1720),
+                            CurrentPrice = "500",
+                            Description = "huy",
+                            Image = "/store-image/eada9a7f-7472-4982-8575-8243f453859b.jpg",
+                            Name = "Feature-22fsdf",
                             Rate = 0,
                             ReducePrice = "200",
                             SupplierId = new Guid("ab77aefb-5a93-4fa6-abfb-5c904d7ad5b8"),

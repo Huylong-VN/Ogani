@@ -3,65 +3,61 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Ogani.Migrations
 {
-    public partial class add_table_blog_update_re : Migration
+    public partial class add_5cot_minh : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropIndex(
-                name: "IX_Blogs_UserId",
-                table: "Blogs");
+            migrationBuilder.DeleteData(
+                table: "Categories",
+                keyColumn: "Id",
+                keyValue: new Guid("0dedf8c9-ab72-4704-8ff3-3cfcd837fe9d"));
 
             migrationBuilder.DeleteData(
                 table: "Categories",
                 keyColumn: "Id",
-                keyValue: new Guid("12180db9-f0cd-4f49-942b-e7a209fb5762"));
+                keyValue: new Guid("18cafd1d-14fb-4793-bc3a-4365d29c1c1b"));
 
             migrationBuilder.DeleteData(
                 table: "Categories",
                 keyColumn: "Id",
-                keyValue: new Guid("3bddb6eb-4649-482e-b047-6c7355707baa"));
+                keyValue: new Guid("2bdda6d0-e9a5-47f1-8f3a-b60a82ecd386"));
 
             migrationBuilder.DeleteData(
                 table: "Categories",
                 keyColumn: "Id",
-                keyValue: new Guid("5eda00c0-61ee-4feb-b69e-964a36a08887"));
+                keyValue: new Guid("4b583ce3-c012-40bf-abf8-481ad6a64fc0"));
 
             migrationBuilder.DeleteData(
                 table: "Categories",
                 keyColumn: "Id",
-                keyValue: new Guid("8d42442e-1380-4718-8f1b-168188dfff2d"));
+                keyValue: new Guid("c37e1492-d3e9-4596-8254-1f99f48dd256"));
 
             migrationBuilder.DeleteData(
                 table: "Categories",
                 keyColumn: "Id",
-                keyValue: new Guid("97914234-c15e-4b46-8a79-86a6fd079028"));
-
-            migrationBuilder.DeleteData(
-                table: "Categories",
-                keyColumn: "Id",
-                keyValue: new Guid("b028f39d-2bea-4f72-bee3-6cb6cb27aba9"));
+                keyValue: new Guid("d59851b9-72c7-4130-addf-2d814e626520"));
 
             migrationBuilder.DeleteData(
                 table: "Products",
                 keyColumn: "Id",
-                keyValue: new Guid("b7916e0a-3cf0-4b3c-b373-70e6bc5bcf81"));
+                keyValue: new Guid("83d8c841-06bc-445d-ac1c-c17ea5e9104e"));
 
             migrationBuilder.DeleteData(
                 table: "Roles",
                 keyColumn: "Id",
-                keyValue: new Guid("af280dc0-c93e-4b64-a390-2c92dd700f02"));
+                keyValue: new Guid("4c6a0238-3939-4e7f-b378-2feab585c35d"));
 
             migrationBuilder.InsertData(
                 table: "Categories",
                 columns: new[] { "Id", "Description", "Name" },
                 values: new object[,]
                 {
-                    { new Guid("be8857a5-ab33-4648-b7c1-de003c513af0"), "", "Meat" },
-                    { new Guid("76e0a243-65e7-4be3-b54a-d3332e91f2b4"), "", "Oranges" },
-                    { new Guid("8f9231a1-7d56-467e-9ac6-0e9e675bc939"), "", "Fastfood" },
-                    { new Guid("63bfd0cd-aebc-4048-bcd8-9aecd471a206"), "", "Fresh Bananas" },
-                    { new Guid("ae606eb9-fdb7-4ff7-b9a5-d27643262dd0"), "", "Drink Fruits" },
-                    { new Guid("0dac5d43-0f94-4b2e-917a-88dc36884515"), "", "Sea Food" }
+                    { new Guid("82d738ac-29b1-400d-8faf-2a9fef0124aa"), "", "Meat" },
+                    { new Guid("77b382e7-d906-4899-a348-49b334b77d84"), "", "Oranges" },
+                    { new Guid("ae8fc1ae-64e5-4e7e-9cc6-14c2a2e2f447"), "", "Fastfood" },
+                    { new Guid("71c2d88e-976e-47f9-bf2d-0790446af099"), "", "Fresh Bananas" },
+                    { new Guid("5ca1097c-6cf0-4358-bfbb-7618ded324e4"), "", "Drink Fruits" },
+                    { new Guid("cbdb92cd-6720-44ce-afa2-769540c669e9"), "", "Sea Food" }
                 });
 
             migrationBuilder.UpdateData(
@@ -69,95 +65,95 @@ namespace Ogani.Migrations
                 keyColumn: "Id",
                 keyValue: new Guid("ed040235-219c-48d8-a12d-3ae4d89a2fb9"),
                 column: "CreateAt",
-                value: new DateTime(2022, 3, 28, 14, 24, 11, 284, DateTimeKind.Local).AddTicks(925));
+                value: new DateTime(2022, 3, 31, 11, 39, 30, 570, DateTimeKind.Local).AddTicks(9284));
 
             migrationBuilder.InsertData(
                 table: "Products",
                 columns: new[] { "Id", "CreateAt", "CurrentPrice", "Description", "Image", "Name", "Rate", "ReducePrice", "SupplierId", "ToTalRemaining" },
-                values: new object[] { new Guid("4978a2c5-90be-4b31-8c4c-3bbf27f8fd41"), new DateTime(2022, 3, 28, 14, 24, 11, 286, DateTimeKind.Local).AddTicks(7126), "500", "Feature", "/img/featured/feature-2.jpg", "Feature-2", 0, "200", new Guid("ab77aefb-5a93-4fa6-abfb-5c904d7ad5b8"), 5 });
+                values: new object[,]
+                {
+                    { new Guid("16844377-d714-4495-97b2-a22ce1873492"), new DateTime(2022, 3, 31, 11, 39, 30, 573, DateTimeKind.Local).AddTicks(1549), "500", "Feature", "/img/featured/feature-2.jpg", "Feature-2", 0, "200", new Guid("ab77aefb-5a93-4fa6-abfb-5c904d7ad5b8"), 5 },
+                    { new Guid("c6915541-583a-41cb-8c18-2226fb8c06a4"), new DateTime(2022, 3, 31, 11, 39, 30, 573, DateTimeKind.Local).AddTicks(1720), "500", "huy", "/store-image/eada9a7f-7472-4982-8575-8243f453859b.jpg", "Feature-22fsdf", 0, "200", new Guid("ab77aefb-5a93-4fa6-abfb-5c904d7ad5b8"), 5 }
+                });
 
             migrationBuilder.UpdateData(
                 table: "Roles",
                 keyColumn: "Id",
                 keyValue: new Guid("cc88ab6f-5d66-4c30-a60e-8f5254f1e112"),
                 column: "ConcurrencyStamp",
-                value: "97dadfdf-5229-41c5-a9f0-404915371cec");
+                value: "e9fe1280-5719-450d-b0c0-95cd980984a4");
 
             migrationBuilder.InsertData(
                 table: "Roles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { new Guid("1c10e13b-0497-4336-ab07-ac041201b518"), "9f902b4f-5aa5-42b7-9df5-1995b06ffd21", "employee", "employee" });
+                values: new object[] { new Guid("3573908a-8a36-43f0-865d-04af479cea79"), "f0b2def7-2759-4380-bfee-8c893c2f41a2", "employee", "employee" });
 
             migrationBuilder.UpdateData(
                 table: "Users",
                 keyColumn: "Id",
                 keyValue: new Guid("0027068e-4c5d-4ecb-a157-b9cc063cd672"),
                 columns: new[] { "ConcurrencyStamp", "PasswordHash" },
-                values: new object[] { "e9fb5782-7da4-4ffe-83e6-304834ce33fa", "AQAAAAEAACcQAAAAEAWooYwesTEBGJkR84fGD75CU853iaAbezkhbaIeRMwmEu/3L6+g7opz6phl5pZYhg==" });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Blogs_UserId",
-                table: "Blogs",
-                column: "UserId");
+                values: new object[] { "3deafc67-ffef-45a4-8143-ca36d5966275", "AQAAAAEAACcQAAAAEJBtCeeLxYLoH92qU15TZTzorliD+46JHm16G4ui4E+95pXFm6D3xQwCsh9obm95qg==" });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropIndex(
-                name: "IX_Blogs_UserId",
-                table: "Blogs");
+            migrationBuilder.DeleteData(
+                table: "Categories",
+                keyColumn: "Id",
+                keyValue: new Guid("5ca1097c-6cf0-4358-bfbb-7618ded324e4"));
 
             migrationBuilder.DeleteData(
                 table: "Categories",
                 keyColumn: "Id",
-                keyValue: new Guid("0dac5d43-0f94-4b2e-917a-88dc36884515"));
+                keyValue: new Guid("71c2d88e-976e-47f9-bf2d-0790446af099"));
 
             migrationBuilder.DeleteData(
                 table: "Categories",
                 keyColumn: "Id",
-                keyValue: new Guid("63bfd0cd-aebc-4048-bcd8-9aecd471a206"));
+                keyValue: new Guid("77b382e7-d906-4899-a348-49b334b77d84"));
 
             migrationBuilder.DeleteData(
                 table: "Categories",
                 keyColumn: "Id",
-                keyValue: new Guid("76e0a243-65e7-4be3-b54a-d3332e91f2b4"));
+                keyValue: new Guid("82d738ac-29b1-400d-8faf-2a9fef0124aa"));
 
             migrationBuilder.DeleteData(
                 table: "Categories",
                 keyColumn: "Id",
-                keyValue: new Guid("8f9231a1-7d56-467e-9ac6-0e9e675bc939"));
+                keyValue: new Guid("ae8fc1ae-64e5-4e7e-9cc6-14c2a2e2f447"));
 
             migrationBuilder.DeleteData(
                 table: "Categories",
                 keyColumn: "Id",
-                keyValue: new Guid("ae606eb9-fdb7-4ff7-b9a5-d27643262dd0"));
-
-            migrationBuilder.DeleteData(
-                table: "Categories",
-                keyColumn: "Id",
-                keyValue: new Guid("be8857a5-ab33-4648-b7c1-de003c513af0"));
+                keyValue: new Guid("cbdb92cd-6720-44ce-afa2-769540c669e9"));
 
             migrationBuilder.DeleteData(
                 table: "Products",
                 keyColumn: "Id",
-                keyValue: new Guid("4978a2c5-90be-4b31-8c4c-3bbf27f8fd41"));
+                keyValue: new Guid("16844377-d714-4495-97b2-a22ce1873492"));
+
+            migrationBuilder.DeleteData(
+                table: "Products",
+                keyColumn: "Id",
+                keyValue: new Guid("c6915541-583a-41cb-8c18-2226fb8c06a4"));
 
             migrationBuilder.DeleteData(
                 table: "Roles",
                 keyColumn: "Id",
-                keyValue: new Guid("1c10e13b-0497-4336-ab07-ac041201b518"));
+                keyValue: new Guid("3573908a-8a36-43f0-865d-04af479cea79"));
 
             migrationBuilder.InsertData(
                 table: "Categories",
                 columns: new[] { "Id", "Description", "Name" },
                 values: new object[,]
                 {
-                    { new Guid("3bddb6eb-4649-482e-b047-6c7355707baa"), "", "Meat" },
-                    { new Guid("97914234-c15e-4b46-8a79-86a6fd079028"), "", "Oranges" },
-                    { new Guid("8d42442e-1380-4718-8f1b-168188dfff2d"), "", "Fastfood" },
-                    { new Guid("b028f39d-2bea-4f72-bee3-6cb6cb27aba9"), "", "Fresh Bananas" },
-                    { new Guid("12180db9-f0cd-4f49-942b-e7a209fb5762"), "", "Drink Fruits" },
-                    { new Guid("5eda00c0-61ee-4feb-b69e-964a36a08887"), "", "Sea Food" }
+                    { new Guid("2bdda6d0-e9a5-47f1-8f3a-b60a82ecd386"), "", "Meat" },
+                    { new Guid("18cafd1d-14fb-4793-bc3a-4365d29c1c1b"), "", "Oranges" },
+                    { new Guid("d59851b9-72c7-4130-addf-2d814e626520"), "", "Fastfood" },
+                    { new Guid("0dedf8c9-ab72-4704-8ff3-3cfcd837fe9d"), "", "Fresh Bananas" },
+                    { new Guid("4b583ce3-c012-40bf-abf8-481ad6a64fc0"), "", "Drink Fruits" },
+                    { new Guid("c37e1492-d3e9-4596-8254-1f99f48dd256"), "", "Sea Food" }
                 });
 
             migrationBuilder.UpdateData(
@@ -165,37 +161,31 @@ namespace Ogani.Migrations
                 keyColumn: "Id",
                 keyValue: new Guid("ed040235-219c-48d8-a12d-3ae4d89a2fb9"),
                 column: "CreateAt",
-                value: new DateTime(2022, 3, 28, 14, 20, 4, 403, DateTimeKind.Local).AddTicks(693));
+                value: new DateTime(2022, 3, 31, 11, 28, 39, 672, DateTimeKind.Local).AddTicks(3811));
 
             migrationBuilder.InsertData(
                 table: "Products",
                 columns: new[] { "Id", "CreateAt", "CurrentPrice", "Description", "Image", "Name", "Rate", "ReducePrice", "SupplierId", "ToTalRemaining" },
-                values: new object[] { new Guid("b7916e0a-3cf0-4b3c-b373-70e6bc5bcf81"), new DateTime(2022, 3, 28, 14, 20, 4, 405, DateTimeKind.Local).AddTicks(4293), "500", "Feature", "/img/featured/feature-2.jpg", "Feature-2", 0, "200", new Guid("ab77aefb-5a93-4fa6-abfb-5c904d7ad5b8"), 5 });
+                values: new object[] { new Guid("83d8c841-06bc-445d-ac1c-c17ea5e9104e"), new DateTime(2022, 3, 31, 11, 28, 39, 674, DateTimeKind.Local).AddTicks(1989), "500", "Feature", "/img/featured/feature-2.jpg", "Feature-2", 0, "200", new Guid("ab77aefb-5a93-4fa6-abfb-5c904d7ad5b8"), 5 });
 
             migrationBuilder.UpdateData(
                 table: "Roles",
                 keyColumn: "Id",
                 keyValue: new Guid("cc88ab6f-5d66-4c30-a60e-8f5254f1e112"),
                 column: "ConcurrencyStamp",
-                value: "b0aa40e8-845d-41d5-bd35-a68ba6ca1a1b");
+                value: "fcaf0e5c-fefa-4829-9d6e-185d575239aa");
 
             migrationBuilder.InsertData(
                 table: "Roles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { new Guid("af280dc0-c93e-4b64-a390-2c92dd700f02"), "9954b7b5-8229-4d98-b13c-c9259956891d", "employee", "employee" });
+                values: new object[] { new Guid("4c6a0238-3939-4e7f-b378-2feab585c35d"), "785c0168-1c6e-4f53-9572-76de57d4a3d5", "employee", "employee" });
 
             migrationBuilder.UpdateData(
                 table: "Users",
                 keyColumn: "Id",
                 keyValue: new Guid("0027068e-4c5d-4ecb-a157-b9cc063cd672"),
                 columns: new[] { "ConcurrencyStamp", "PasswordHash" },
-                values: new object[] { "b7d80b29-f3fa-4de5-88f4-d912b41f05ca", "AQAAAAEAACcQAAAAEJhNV86+iftbJ3LZP1QEe1wVGxWZc+RmvoNoaIk5hF/Bu8SGy/e5bp2oO9QgDLVAkA==" });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Blogs_UserId",
-                table: "Blogs",
-                column: "UserId",
-                unique: true);
+                values: new object[] { "f0e1eb14-9765-4f40-a984-334c011a7196", "AQAAAAEAACcQAAAAEHtgXVQ6DydK0/2yUbDYeSydPQIbpN71grCgOIV6bK5sMRc8nZXsXHcMHHNJFyjiwA==" });
         }
     }
 }
