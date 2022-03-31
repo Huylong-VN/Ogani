@@ -1,0 +1,117 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = "~/Views/Shared/_layout_admin.cshtml";
+    ViewData["page"] = "Product";
+    ViewData["Expand"] = "ViewList";
+}
+
+<!-- ============================================================== -->
+<div class="row">
+    <!-- column -->
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <!-- title -->
+                <div class="d-md-flex">
+                    <div>
+                        <h4 class="card-title">User</h4>
+                        <h5 class="card-subtitle">Overview of User</h5>
+                        <button class='btn btn-primary'>Create</button>
+                        @if (TempData["msg"] != null)
+                        {
+                            <div class="alert alert-primary" role="alert">
+                                @TempData["msg"]
+                            </div>
+                        }
+                    </div>
+                    <div class="ms-auto">
+                        <div class="dl">
+                            <select class="form-select shadow-none">
+                                <option value="0" selected>Monthly</option>
+                                <option value="1">Daily</option>
+                                <option value="2">Weekly</option>
+                                <option value="3">Yearly</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <!-- title -->
+            </div>
+            <div class="table-responsive">
+                <table class="table v-middle">
+                    <thead>
+                        <tr class="bg-light">
+                            <th class="border-top-0">FullName</th>
+                            <th class="border-top-0">UserName</th>
+                            <th class="border-top-0">Email</th>
+                            <th class="border-top-0">PhoneNumber</th>
+                            <th class="border-top-0">Date Of birth</th>
+                            <th class="border-top-0">Roles</th>
+                            <th class="border-top-0">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var user in ViewBag.Users)
+                        {
+                            <tr>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <div class="m-r-10">
+                                            <a class="btn btn-circle d-flex btn-info text-white"><img src='/store-image/@user.Avatar' /></a>
+                                        </div>
+                                        <div class="">
+                                            <h4 class="m-b-0 font-16">
+                                                @user.FirstName
+                                                @if (user.LastName != null)
+                                                {
+                                                    <span>+ @user.LastName</span>
+                                                }
+                                            </h4>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>@user.UserName</td>
+                                <td>@user.Email</td>
+                                <td>@user.PhoneNumber</td>
+                                <td>@user.DateOfBirth</td>
+                                <td>
+                                    @foreach (var userRole in user.AppUserRoles)
+                                    {
+                                        <li>@userRole.AppRole.Name</li>
+                                    }
+                                </td>
+                                <td>
+                                    <div class="dropdown">
+                                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                            Menu
+                                        </button>
+                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                            <li><a class="dropdown-item" asp-action='UpdateUser' asp-route-Id="@user.Id">Update</a></li>
+                                            <li><a class="dropdown-item" asp-action='RoleAssign' asp-route-Id="@user.Id">Role Assign</a></li>
+                                            <li><a class="dropdown-item" asp-action='LookUser' asp-route-Id="@user.Id">Looked</a></li>
+                                            <li><a class="dropdown-item" asp-action='DeleteUser' asp-route-Id="@user.Id">Delete</a></li>
+                                        </ul>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                <paging total-records="Model.TotalRecords"
+                     page-no="Model.PageIndex"
+                        max-displayed-pages="5"
+                        page-size="Model.PageSize"
+                        page-size-dropdown-items="5-15-30"
+                        show-total-pages="false"
+                        show-page-size-nav="false"
+                        show-total-records="false"
+                        class="float-right">
+                </paging>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ============================================================== -->
+<!-- Table -->

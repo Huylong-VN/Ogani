@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Ogani.Models;
@@ -12,6 +9,7 @@ namespace Ogani.Controllers
     public class AccountController : Controller
     {
         private readonly IAccountRepository _accountRepository;
+
         public AccountController(IAccountRepository accountRepository)
         {
             _accountRepository = accountRepository;
@@ -19,7 +17,6 @@ namespace Ogani.Controllers
 
         public IActionResult Index()
         {
-            
             return View();
         }
 
@@ -54,7 +51,6 @@ namespace Ogani.Controllers
             return View(userModel);
         }
 
-
         [Route("login")]
         public IActionResult Login()
         {
@@ -74,6 +70,11 @@ namespace Ogani.Controllers
                     {
                         return LocalRedirect(returnUrl);
                     }
+                    if (!this.User.IsInRole("customer"))
+                    {
+                        return RedirectToAction("Index", "Admin");
+                    }
+
                     return RedirectToAction("Index", "Home");
                 }
                 if (result.IsNotAllowed)
@@ -82,13 +83,13 @@ namespace Ogani.Controllers
                 }
                 else if (result.IsLockedOut)
                 {
-                    ModelState.AddModelError("", "Account blocked. Try after one minitius.");
+                    var timeLook = await _accountRepository.GetTimeLooked(signInModel.Email);
+                    ModelState.AddModelError("", "Account blocked. Try after " + timeLook);
                 }
                 else
                 {
                     ModelState.AddModelError("", "Invalid credentials");
                 }
-
             }
 
             return View(signInModel);
@@ -102,8 +103,10 @@ namespace Ogani.Controllers
         }
 
         [Route("change-password")]
+        [Authorize]
         public IActionResult ChangePassword()
         {
+            var r = this.User.Identity.IsAuthenticated;
             return View();
         }
 
@@ -124,7 +127,6 @@ namespace Ogani.Controllers
                 {
                     ModelState.AddModelError("", error.Description);
                 }
-
             }
             return View(model);
         }
@@ -132,6 +134,16 @@ namespace Ogani.Controllers
         [HttpGet("confirm-email")]
         public async Task<IActionResult> ConfirmEmail(string uid, string token, string email)
         {
+            //var checkToken = await _accountRepository.CheckToken(new CheckTokenModel()
+            //{
+            //    Purpose = "EmailConfirmation",
+            //    Token = token,
+            //    UserId = uid,
+            //});
+            //if (checkToken == false)
+            //{
+            //    return Redirect("/");
+            //}
             EmailConfirmModel model = new EmailConfirmModel
             {
                 Email = email
@@ -173,13 +185,13 @@ namespace Ogani.Controllers
             return View(model);
         }
 
-        [AllowAnonymous, HttpGet("fotgot-password")]
+        [AllowAnonymous, HttpGet("forgot-password")]
         public IActionResult ForgotPassword()
         {
             return View();
         }
 
-        [AllowAnonymous, HttpPost("fotgot-password")]
+        [AllowAnonymous, HttpPost("forgot-password")]
         public async Task<IActionResult> ForgotPassword(ForgotPasswordModel model)
         {
             if (ModelState.IsValid)
@@ -198,7 +210,7 @@ namespace Ogani.Controllers
         }
 
         [AllowAnonymous, HttpGet("reset-password")]
-        public IActionResult ResetPassword(string uid, string token)
+        public async Task<IActionResult> ResetPassword(string uid, string token)
         {
             ResetPasswordModel resetPasswordModel = new ResetPasswordModel
             {
@@ -229,6 +241,5 @@ namespace Ogani.Controllers
             }
             return View(model);
         }
-
     }
 }

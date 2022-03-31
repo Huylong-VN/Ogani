@@ -1,12 +1,15 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Ogani.Data;
 using Ogani.Models;
+using System;
 using System.Threading.Tasks;
 
 namespace Ogani.Repository
 {
     public interface IAccountRepository
     {
+        Task<DateTimeOffset?> GetTimeLooked(string email);
+
         Task<AppUser> GetUserByEmailAsync(string email);
 
         Task<IdentityResult> CreateUserAsync(SignUpUserModel userModel);

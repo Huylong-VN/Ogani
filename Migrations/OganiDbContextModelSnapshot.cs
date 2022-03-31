@@ -64,8 +64,10 @@ namespace Ogani.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<System.Guid>", b =>
                 {
                     b.Property<Guid>("UserId")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ProviderKey")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("LoginProvider")
                         .HasColumnType("nvarchar(max)");
@@ -73,10 +75,7 @@ namespace Ogani.Migrations
                     b.Property<string>("ProviderDisplayName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ProviderKey")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("UserId");
+                    b.HasKey("UserId", "ProviderKey");
 
                     b.ToTable("UserLogins");
                 });
@@ -124,9 +123,16 @@ namespace Ogani.Migrations
                         new
                         {
                             Id = new Guid("cc88ab6f-5d66-4c30-a60e-8f5254f1e112"),
-                            ConcurrencyStamp = "45110842-578a-4d86-a33b-024ebcd10b38",
+                            ConcurrencyStamp = "abb71ac1-83a3-4b23-9f21-6fd4fef7dc7f",
                             Name = "admin",
                             NormalizedName = "admin"
+                        },
+                        new
+                        {
+                            Id = new Guid("4f64bb45-d9da-45e3-b183-3428978f1aff"),
+                            ConcurrencyStamp = "e871ecae-11bd-4d8e-9f45-bcde21a2b15a",
+                            Name = "employee",
+                            NormalizedName = "employee"
                         });
                 });
 
@@ -139,8 +145,14 @@ namespace Ogani.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
+                    b.Property<string>("Avatar")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("ConcurrencyStamp")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreateAt")
+                        .HasColumnType("datetime2");
 
                     b.Property<DateTime?>("DateOfBirth")
                         .HasColumnType("datetime2");
@@ -196,40 +208,327 @@ namespace Ogani.Migrations
                         {
                             Id = new Guid("0027068e-4c5d-4ecb-a157-b9cc063cd672"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "c609a6ff-8910-478c-a9c0-ff6833bb152a",
+                            ConcurrencyStamp = "ea778b82-832e-4751-973d-63434a516bd5",
+                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "admin@gmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "admin@gmail.com",
-                            NormalizedUserName = "admin",
-                            PasswordHash = "AQAAAAEAACcQAAAAEC+xzutP4ZMaEYKyCbAANxuX1f2V39SXNpfLuSxXA/XmrJr6Il+RENvP2atxQTmuuw==",
+                            NormalizedUserName = "admin@gmail.com",
+                            PasswordHash = "AQAAAAEAACcQAAAAEFh00nSsTdryxDl9j6Rnz0VdEzKstswRSXUETBm6A3NczTmA1SOZCyn/KQ9NA9dU/w==",
                             PhoneNumber = "02002012",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
-                            UserName = "admin"
+                            UserName = "admin@gmail.com"
                         });
                 });
 
             modelBuilder.Entity("Ogani.Data.AppUserRole", b =>
                 {
-                    b.Property<Guid>("RoleId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("RoleId", "UserId");
+                    b.Property<Guid>("RoleId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.HasIndex("UserId");
+                    b.HasKey("UserId", "RoleId");
+
+                    b.HasIndex("RoleId");
 
                     b.ToTable("UserRoles");
 
                     b.HasData(
                         new
                         {
-                            RoleId = new Guid("cc88ab6f-5d66-4c30-a60e-8f5254f1e112"),
-                            UserId = new Guid("0027068e-4c5d-4ecb-a157-b9cc063cd672")
+                            UserId = new Guid("0027068e-4c5d-4ecb-a157-b9cc063cd672"),
+                            RoleId = new Guid("cc88ab6f-5d66-4c30-a60e-8f5254f1e112")
+                        });
+                });
+
+            modelBuilder.Entity("Ogani.Data.Blog", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Content")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreateAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Image")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Blogs");
+                });
+
+            modelBuilder.Entity("Ogani.Data.Category", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Categories");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("695b5cdb-0992-488e-8963-e76093bb5905"),
+                            Description = "",
+                            Name = "Vegetables"
+                        },
+                        new
+                        {
+                            Id = new Guid("87c9996c-d516-49cf-a2c7-5469a18ef21c"),
+                            Description = "",
+                            Name = "Meat"
+                        },
+                        new
+                        {
+                            Id = new Guid("1b9aa9ca-1bcb-4457-b4c1-14ba19bbd34b"),
+                            Description = "",
+                            Name = "Oranges"
+                        },
+                        new
+                        {
+                            Id = new Guid("a32f1fa2-fe32-499f-bca9-8befc680e855"),
+                            Description = "",
+                            Name = "Fastfood"
+                        },
+                        new
+                        {
+                            Id = new Guid("fe229973-50ac-466a-9826-a1c8e1f2abc3"),
+                            Description = "",
+                            Name = "Fresh Bananas"
+                        },
+                        new
+                        {
+                            Id = new Guid("e71aa24e-ae50-4f3a-abf7-9e7191dbe7a7"),
+                            Description = "",
+                            Name = "Drink Fruits"
+                        },
+                        new
+                        {
+                            Id = new Guid("3f34bfd9-dddc-4105-95f4-bc72186807f9"),
+                            Description = "",
+                            Name = "Sea Food"
+                        });
+                });
+
+            modelBuilder.Entity("Ogani.Data.Order", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreateAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FirstName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Phone")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Total")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Orders");
+                });
+
+            modelBuilder.Entity("Ogani.Data.Product", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreateAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CurrentPrice")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Image")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Rate")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ReducePrice")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("SupplierId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("ToTalRemaining")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SupplierId");
+
+                    b.ToTable("Products");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("ed040235-219c-48d8-a12d-3ae4d89a2fb9"),
+                            CreateAt = new DateTime(2022, 3, 30, 18, 19, 46, 506, DateTimeKind.Local).AddTicks(563),
+                            CurrentPrice = "100",
+                            Description = "Feature",
+                            Image = "/img/featured/feature-1.jpg",
+                            Name = "Feature-1",
+                            Rate = 0,
+                            ReducePrice = "200",
+                            SupplierId = new Guid("ab77aefb-5a93-4fa6-abfb-5c904d7ad5b8"),
+                            ToTalRemaining = 5
+                        },
+                        new
+                        {
+                            Id = new Guid("ed25ad91-edf8-426d-b5b5-65f10fdb64e2"),
+                            CreateAt = new DateTime(2022, 3, 30, 18, 19, 46, 508, DateTimeKind.Local).AddTicks(3765),
+                            CurrentPrice = "500",
+                            Description = "Feature",
+                            Image = "/img/featured/feature-2.jpg",
+                            Name = "Feature-2",
+                            Rate = 0,
+                            ReducePrice = "200",
+                            SupplierId = new Guid("ab77aefb-5a93-4fa6-abfb-5c904d7ad5b8"),
+                            ToTalRemaining = 5
+                        });
+                });
+
+            modelBuilder.Entity("Ogani.Data.ProductCategory", b =>
+                {
+                    b.Property<Guid>("ProductId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CategoryId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("ProductId", "CategoryId");
+
+                    b.HasIndex("CategoryId");
+
+                    b.ToTable("ProductCategories");
+
+                    b.HasData(
+                        new
+                        {
+                            ProductId = new Guid("ed040235-219c-48d8-a12d-3ae4d89a2fb9"),
+                            CategoryId = new Guid("695b5cdb-0992-488e-8963-e76093bb5905")
+                        });
+                });
+
+            modelBuilder.Entity("Ogani.Data.ProductImage", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("ProductId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("ProductImages");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("3c9a6cad-25cd-4aef-9d16-3f22d6d5d717"),
+                            Name = "Feature-3",
+                            ProductId = new Guid("ed040235-219c-48d8-a12d-3ae4d89a2fb9")
+                        });
+                });
+
+            modelBuilder.Entity("Ogani.Data.ProductOrder", b =>
+                {
+                    b.Property<Guid>("ProductId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("OrderId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.HasKey("ProductId", "OrderId");
+
+                    b.HasIndex("OrderId");
+
+                    b.ToTable("ProductOrders");
+                });
+
+            modelBuilder.Entity("Ogani.Data.Supplier", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Address")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Suppliers");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("ab77aefb-5a93-4fa6-abfb-5c904d7ad5b8"),
+                            Address = "Ha noi",
+                            Name = " Nguoi ha noi"
                         });
                 });
 
@@ -252,6 +551,88 @@ namespace Ogani.Migrations
                     b.Navigation("AppUser");
                 });
 
+            modelBuilder.Entity("Ogani.Data.Blog", b =>
+                {
+                    b.HasOne("Ogani.Data.AppUser", "AppUser")
+                        .WithMany("Blogs")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("AppUser");
+                });
+
+            modelBuilder.Entity("Ogani.Data.Order", b =>
+                {
+                    b.HasOne("Ogani.Data.AppUser", "AppUser")
+                        .WithMany("Orders")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("AppUser");
+                });
+
+            modelBuilder.Entity("Ogani.Data.Product", b =>
+                {
+                    b.HasOne("Ogani.Data.Supplier", "Supplier")
+                        .WithMany("Products")
+                        .HasForeignKey("SupplierId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Supplier");
+                });
+
+            modelBuilder.Entity("Ogani.Data.ProductCategory", b =>
+                {
+                    b.HasOne("Ogani.Data.Category", "Category")
+                        .WithMany("ProductCategories")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Ogani.Data.Product", "Product")
+                        .WithMany("ProductCategories")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Category");
+
+                    b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("Ogani.Data.ProductImage", b =>
+                {
+                    b.HasOne("Ogani.Data.Product", "Product")
+                        .WithMany("ProductImages")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("Ogani.Data.ProductOrder", b =>
+                {
+                    b.HasOne("Ogani.Data.Order", "Order")
+                        .WithMany("ProductOrders")
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Ogani.Data.Product", "Product")
+                        .WithMany("ProductOrders")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Order");
+
+                    b.Navigation("Product");
+                });
+
             modelBuilder.Entity("Ogani.Data.AppRole", b =>
                 {
                     b.Navigation("AppUserRoles");
@@ -260,6 +641,34 @@ namespace Ogani.Migrations
             modelBuilder.Entity("Ogani.Data.AppUser", b =>
                 {
                     b.Navigation("AppUserRoles");
+
+                    b.Navigation("Blogs");
+
+                    b.Navigation("Orders");
+                });
+
+            modelBuilder.Entity("Ogani.Data.Category", b =>
+                {
+                    b.Navigation("ProductCategories");
+                });
+
+            modelBuilder.Entity("Ogani.Data.Order", b =>
+                {
+                    b.Navigation("ProductOrders");
+                });
+
+            modelBuilder.Entity("Ogani.Data.Product", b =>
+                {
+                    b.Navigation("ProductCategories");
+
+                    b.Navigation("ProductImages");
+
+                    b.Navigation("ProductOrders");
+                });
+
+            modelBuilder.Entity("Ogani.Data.Supplier", b =>
+                {
+                    b.Navigation("Products");
                 });
 #pragma warning restore 612, 618
         }

@@ -1,0 +1,12 @@
+﻿@{
+    Layout = "~/Views/Shared/_layout_admin.cshtml";
+    ViewData["page"] = "Product";
+    ViewData["Expand"] = "ViewList";
+}
+
+<form asp-action='ProductImageDetailCreate' enctype="multipart/form-data">
+    <label>Image</label>
+    <input type='file' name='img' />
+    <input name='id' value='@ViewBag.Id' />
+    <button>Create</button>
+</form>
