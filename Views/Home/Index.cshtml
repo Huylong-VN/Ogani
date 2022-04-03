@@ -1,4 +1,7 @@
 ﻿<!-- Hero Section Begin -->
+@{
+    ViewData["Title"] = "Home";
+}
 @model Ogani.ViewModel.PagedResultBase
 <section class="hero">
     <div class="container">
@@ -103,15 +106,15 @@
                 <div class="featured__controls">
                     <ul>
                         @{
-                            string check= string.IsNullOrEmpty(@Context.Request.Query["categoryId"]) ? "active" : "";
+                            string check = string.IsNullOrEmpty(@Context.Request.Query["categoryId"]) ? "active" : "";
                         }
                         <li class="@check"><a href='/'>All</a></li>
-                         @foreach (var ct in ViewBag.Categories)
+                        @foreach (var ct in ViewBag.Categories)
                         {
 
                             if (!string.IsNullOrEmpty(Context.Request.Query["categoryId"]))
                             {
-                                var activeClass = new Guid(@Context.Request.Query["categoryId"]).Equals(ct.Id) ? "active":"";
+                                var activeClass = new Guid(@Context.Request.Query["categoryId"]).Equals(ct.Id) ? "active" : "";
                                 <li class="@activeClass"><a href="?categoryId=@ct.Id">@ct.Name</a></li>
                             }
                             else
@@ -192,73 +195,79 @@
             <div class="col-lg-4 col-md-6">
                 <div class="latest-product__text">
                     <h4>Latest Products</h4>
-                     <div class="latest-product__slider owl-carousel">
-                @foreach(var later in ViewBag.latestProduct) {
-                <div class="latest-prdouct__slider__item">
-                  @foreach(var p in later) {
-                  <a href="#" class="latest-product__item">
-                    <div class="latest-product__item__pic">
-                      <img style = 'width:120px' src="/store-image/@p.Image" alt="" />
-                    </div>
-                    <div class="latest-product__item__text">
-                      <h6>@p.Name</h6>
-                      <span>$@p.CurrentPrice</span>
-                    </div>
-                  </a>
+                    <div class="latest-product__slider owl-carousel">
+                        @foreach (var later in ViewBag.latestProduct)
+                        {
+                            <div class="latest-prdouct__slider__item">
+                                @foreach (var p in later)
+                                {
+                                    <a href="#" class="latest-product__item">
+                                        <div class="latest-product__item__pic">
+                                            <img style='width:120px' src="/store-image/@p.Image" alt="" />
+                                        </div>
+                                        <div class="latest-product__item__text">
+                                            <h6>@p.Name</h6>
+                                            <span>$@p.CurrentPrice</span>
+                                        </div>
+                                    </a>
 
-                  }
-                </div>
+                                }
+                            </div>
 
-                }
-              </div>
+                        }
+                    </div>
                 </div>
             </div>
             <div class="col-lg-4 col-md-6">
                 <div class="latest-product__text">
                     <h4>Top Rated Products</h4>
                     <div class="latest-product__slider owl-carousel">
-                @foreach(var later in ViewBag.ratedProduct) {
-                <div class="latest-prdouct__slider__item">
-                  @foreach(var p in later) {
-                  <a href="#" class="latest-product__item">
-                    <div class="latest-product__item__pic">
-                      <img style = 'width:120px' src="/store-image/@p.Image" alt="" />
-                    </div>
-                    <div class="latest-product__item__text">
-                      <h6>@p.Name</h6>
-                      <span>$@p.CurrentPrice</span>
-                    </div>
-                  </a>
+                        @foreach (var later in ViewBag.ratedProduct)
+                        {
+                            <div class="latest-prdouct__slider__item">
+                                @foreach (var p in later)
+                                {
+                                    <a href="#" class="latest-product__item">
+                                        <div class="latest-product__item__pic">
+                                            <img style='width:120px' src="/store-image/@p.Image" alt="" />
+                                        </div>
+                                        <div class="latest-product__item__text">
+                                            <h6>@p.Name</h6>
+                                            <span>$@p.CurrentPrice</span>
+                                        </div>
+                                    </a>
 
-                  }
-                </div>
+                                }
+                            </div>
 
-                }
-              </div>
+                        }
+                    </div>
                 </div>
             </div>
             <div class="col-lg-4 col-md-6">
                 <div class="latest-product__text">
                     <h4>Favorite Products</h4>
-                     <div class="latest-product__slider owl-carousel">
-                @foreach(var later in ViewBag.favoritedProduct) {
-                <div class="latest-prdouct__slider__item">
-                  @foreach(var p in later) {
-                  <a href="#" class="latest-product__item">
-                    <div class="latest-product__item__pic">
-                      <img style = 'width:120px' src="/store-image/@p.Image" alt="" />
-                    </div>
-                    <div class="latest-product__item__text">
-                      <h6>@p.Name</h6>
-                      <span>$@p.CurrentPrice</span>
-                    </div>
-                  </a>
+                    <div class="latest-product__slider owl-carousel">
+                        @foreach (var later in ViewBag.favoritedProduct)
+                        {
+                            <div class="latest-prdouct__slider__item">
+                                @foreach (var p in later)
+                                {
+                                    <a href="#" class="latest-product__item">
+                                        <div class="latest-product__item__pic">
+                                            <img style='width:120px' src="/store-image/@p.Image" alt="" />
+                                        </div>
+                                        <div class="latest-product__item__text">
+                                            <h6>@p.Name</h6>
+                                            <span>$@p.CurrentPrice</span>
+                                        </div>
+                                    </a>
 
-                  }
-                </div>
+                                }
+                            </div>
 
-                }
-              </div>
+                        }
+                    </div>
                 </div>
             </div>
         </div>
@@ -276,22 +285,22 @@
             </div>
         </div>
         <div class="row">
-            @foreach(var blog in ViewBag.blogRecent)
+            @foreach (var blog in ViewBag.blogRecent)
             {
-              <div class="col-lg-4 col-md-4 col-sm-6">
-                <div class="blog__item">
-                    <div class="blog__item__pic">
-                        <img src="/store-image/@blog.Image" alt="" />
-                    </div>
-                    <div class="blog__item__text">
-                        <ul>
-                            <li><i class="fa fa-calendar-o"></i> @blog.CreateAt</li>
-                           @* <li><i class="fa fa-comment-o"></i> 5</li>*@
-                        </ul>
-                        <h5><a asp-action='BlogDetail' asp-route-Id="@blog.Id">@blog.Title</a></h5>
+                <div class="col-lg-4 col-md-4 col-sm-6">
+                    <div class="blog__item">
+                        <div class="blog__item__pic">
+                            <img src="/store-image/@blog.Image" alt="" />
+                        </div>
+                        <div class="blog__item__text">
+                            <ul>
+                                <li><i class="fa fa-calendar-o"></i> @blog.CreateAt</li>
+                                @* <li><i class="fa fa-comment-o"></i> 5</li>*@
+                            </ul>
+                            <h5><a asp-action='BlogDetail' asp-route-Id="@blog.Id">@blog.Title</a></h5>
+                        </div>
                     </div>
                 </div>
-            </div>  
             }
         </div>
     </div>
