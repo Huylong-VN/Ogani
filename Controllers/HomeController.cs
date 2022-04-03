@@ -417,8 +417,8 @@ namespace Ogani.Controllers
             string partnerCode = "MOMOZLPF20220110";
             string accessKey = "n3sNUZ77wfW6nDqr";
             string serectkey = "v1gAA5mofQ0clCkGy8sBXanfWfRMEHai";
-            string returnUrl = "https://localhost:5001/Home/ConfirmPaymentClient";
-            string notifyurl = "https://localhost:5001/Home/SavePayment"; //lưu ý: notifyurl không được sử dụng localhost, có thể sử dụng ngrok để public localhost trong quá trình test
+            string returnUrl = "https://backend-api37.herokuapp.com/Home/ConfirmPaymentClient";
+            string notifyurl = "https://backend-api37.herokuapp.com/Home/SavePayment"; //lưu ý: notifyurl không được sử dụng localhost, có thể sử dụng ngrok để public localhost trong quá trình test
 
             string orderid = or.Id.ToString();
             string requestId = DateTime.Now.Ticks.ToString();
