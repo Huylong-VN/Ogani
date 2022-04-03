@@ -13,7 +13,7 @@ namespace Ogani.Service
 {
     public class EmailService : IEmailService
     {
-        private const string templatePath = @"EmailTemplate/{0}.html";
+        private const string templatePath = @"wwwroot/EmailTemplate/{0}.html";
         private readonly SMTPConfigModel _smtpConfig;
 
         public async Task SendTestEmail(UserEmailOptions userEmailOptions)

@@ -7,13 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="EmailTemplate\EmailConfirm.html" />
-    <None Remove="EmailTemplate\ForgotPassword.html" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Include="EmailTemplate\EmailConfirm.html" />
-    <Content Include="EmailTemplate\ForgotPassword.html" />
+    <None Remove="wwwroot\EmailTemplate\EmailConfirm.html" />
+    <None Remove="wwwroot\EmailTemplate\ForgotPassword.html" />
   </ItemGroup>
 
   <ItemGroup>
