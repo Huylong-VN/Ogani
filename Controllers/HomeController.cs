@@ -1,9 +1,13 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json.Linq;
 using Ogani.Data;
 using Ogani.Models;
+using Ogani.Service;
 using Ogani.ViewModel;
 using System;
 using System.Collections.Generic;
@@ -17,9 +21,11 @@ namespace Ogani.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly OganiDbContext _dbContext;
+        private readonly UserManager<AppUser> _userManager;
 
-        public HomeController(ILogger<HomeController> logger, OganiDbContext dbContext)
+        public HomeController(ILogger<HomeController> logger, OganiDbContext dbContext, UserManager<AppUser> userManager)
         {
+            _userManager = userManager;
             _dbContext = dbContext;
             _logger = logger;
         }
@@ -135,8 +141,10 @@ namespace Ogani.Controllers
             return View();
         }
 
-        public IActionResult Checkout()
+        [Authorize]
+        public IActionResult Checkout(string total)
         {
+            ViewBag.Total = total;
             return View();
         }
 
@@ -160,6 +168,7 @@ namespace Ogani.Controllers
             ViewBag.Categories = _dbContext.Categories.ToList();
             ViewBag.Favorite = await _dbContext.Products.Include(x => x.Supplier).
                 Include(x => x.ProductCategories).ThenInclude(x => x.Category).OrderBy(x => x.Rate).Take(6).ToListAsync();
+
             var query = _dbContext.Products.Include(x => x.ProductImages).Include(x => x.ProductCategories).
               ThenInclude(x => x.Category).AsQueryable();
             if (!string.IsNullOrWhiteSpace(keyword))
@@ -243,7 +252,7 @@ namespace Ogani.Controllers
                 {
                     cart[index].Quantity++;
                 }
-                else if(index != -1 && quantity != null)
+                else if (index != -1 && quantity != null)
                 {
                     cart[index].Quantity += quantity;
                 }
@@ -255,7 +264,7 @@ namespace Ogani.Controllers
             }
             HttpContext.Session.SetString("toTal", SessionHelper.GetObjectFromJson<List<Item>>(HttpContext.Session, "cart").Count.ToString());
 
-            HttpContext.Session.SetString("toTalPrice", SessionHelper.GetObjectFromJson<List<Item>>(HttpContext.Session, "cart").Sum(x => (long)Convert.ToDouble(x.Product.CurrentPrice)*x.Quantity).ToString());
+            HttpContext.Session.SetString("toTalPrice", SessionHelper.GetObjectFromJson<List<Item>>(HttpContext.Session, "cart").Sum(x => (long)Convert.ToDouble(x.Product.CurrentPrice) * x.Quantity).ToString());
 
             return Redirect(HttpContext.Request.Headers["Referer"].ToString());
         }
@@ -287,7 +296,7 @@ namespace Ogani.Controllers
 
             HttpContext.Session.SetString("toTalPrice", SessionHelper.GetObjectFromJson<List<Item>>(HttpContext.Session, "cart").Sum(x => (long)Convert.ToDouble(x.Product.CurrentPrice) * x.Quantity).ToString());
 
-            return RedirectToAction(nameof(ShoppingCart));
+            return Redirect(HttpContext.Request.Headers["Referer"].ToString());
         }
 
         private int isExist(Guid id)
@@ -307,9 +316,9 @@ namespace Ogani.Controllers
         {
             List<Item> product = SessionHelper.GetObjectFromJson<List<Item>>(HttpContext.Session, "cart");
             ViewBag.Cart = product;
-            if(product != null)
+            if (product != null)
             {
-                ViewBag.Total = SessionHelper.GetObjectFromJson<List<Item>>(HttpContext.Session, "cart").Sum(x => (long)Convert.ToDouble(x.Product.CurrentPrice));
+                ViewBag.Total = HttpContext.Session.GetString("toTalPrice");
             }
             return View(product);
         }
@@ -366,6 +375,110 @@ namespace Ogani.Controllers
             }
             return View(blog);
         }
+
+        // Payment
+        [Authorize]
+        public async Task<ActionResult> Payment()
+        {
+            var user = await _userManager.GetUserAsync(User);
+            Order or = new Order()
+            {
+                CreateAt = DateTime.Now,
+                Email = Request.Form["email"],
+                FirstName = Request.Form["firstName"],
+                LastName = Request.Form["lastName"],
+                Id = Guid.NewGuid(),
+                Phone = Request.Form["phone"],
+                Total = Request.Form["total"],
+                UserId = user.Id,
+                Address = Request.Form["address"],
+                Method = Request.Form["method"]
+            };
+            string amount = (int.Parse(or.Total) * 22839).ToString();
+            string orderInfo = "Payment Product";
+            await _dbContext.Orders.AddAsync(or);
+            List<Item> product = SessionHelper.GetObjectFromJson<List<Item>>(HttpContext.Session, "cart");
+            foreach (var p in product)
+            {
+                await _dbContext.ProductOrders.AddAsync(new ProductOrder()
+                {
+                    OrderId = or.Id,
+                    ProductId = p.Product.Id,
+                    Quantity = p.Quantity
+                });
+            }
+
+            if (Request.Form["method"].Equals("0"))
+            {
+                return RedirectToAction(nameof(ConfirmPaymentClient));
+            }
+            //request params need to request to MoMo system
+            string endpoint = "https://test-payment.momo.vn/gw_payment/transactionProcessor";
+            string partnerCode = "MOMOZLPF20220110";
+            string accessKey = "n3sNUZ77wfW6nDqr";
+            string serectkey = "v1gAA5mofQ0clCkGy8sBXanfWfRMEHai";
+            string returnUrl = "https://localhost:5001/Home/ConfirmPaymentClient";
+            string notifyurl = "https://localhost:5001/Home/SavePayment"; //lưu ý: notifyurl không được sử dụng localhost, có thể sử dụng ngrok để public localhost trong quá trình test
+
+            string orderid = or.Id.ToString();
+            string requestId = DateTime.Now.Ticks.ToString();
+            string extraData = "";
+
+            //Before sign HMAC SHA256 signature
+            string rawHash = "partnerCode=" +
+                partnerCode + "&accessKey=" +
+                accessKey + "&requestId=" +
+                requestId + "&amount=" +
+                amount + "&orderId=" +
+                orderid + "&orderInfo=" +
+                orderInfo + "&returnUrl=" +
+                returnUrl + "&notifyUrl=" +
+                notifyurl + "&extraData=" +
+                extraData;
+
+            MoMoSecurity crypto = new MoMoSecurity();
+            //sign signature SHA256
+            string signature = crypto.signSHA256(rawHash, serectkey);
+
+            //build body json request
+            JObject message = new JObject
+            {
+                { "partnerCode", partnerCode },
+                { "accessKey", accessKey },
+                { "requestId", requestId },
+                { "amount", amount },
+                { "orderId", orderid },
+                { "orderInfo", orderInfo },
+                { "returnUrl", returnUrl },
+                { "notifyUrl", notifyurl },
+                { "extraData", extraData },
+                { "requestType", "captureMoMoWallet" },
+                { "signature", signature }
+            };
+
+            string responseFromMomo = PaymentRequest.sendPaymentRequest(endpoint, message.ToString());
+
+            JObject jmessage = JObject.Parse(responseFromMomo);
+
+            return Redirect(jmessage.GetValue("payUrl").ToString());
+        }
+
+        //Khi thanh toán xong ở cổng thanh toán Momo, Momo sẽ trả về một số thông tin, trong đó có errorCode để check thông tin thanh toán
+        //errorCode = 0 : thanh toán thành công (Request.QueryString["errorCode"])
+        //Tham khảo bảng mã lỗi tại: https://developers.momo.vn/#/docs/aio/?id=b%e1%ba%a3ng-m%c3%a3-l%e1%bb%97i
+        public ActionResult ConfirmPaymentClient()
+        {
+            //hiển thị thông báo cho người dùng
+
+            return View();
+        }
+
+        [HttpPost]
+        public void SavePayment()
+        {
+            //cập nhật dữ liệu vào db
+        }
+
 
         public IActionResult Privacy()
         {

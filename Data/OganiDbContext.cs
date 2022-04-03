@@ -123,7 +123,7 @@ namespace Ogani.Data
                 Email = "admin@gmail.com",
                 NormalizedEmail = "admin@gmail.com",
                 EmailConfirmed = true,
-                PasswordHash = hasher.HashPassword(null, "Huylong@37"),
+                PasswordHash = hasher.HashPassword(null, "Btec123456"),
                 SecurityStamp = string.Empty,
                 PhoneNumber = "02002012",
             });

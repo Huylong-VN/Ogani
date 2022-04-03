@@ -14,6 +14,9 @@ namespace Ogani.Data
         public string Phone { set; get; }
         public string Email { set; get; }
         public string Total { set; get; }
+        public string Address { set; get; }
+        public string Method { set; get; }
+        public bool Status { set; get; }
         public List<ProductOrder> ProductOrders { set; get; }
     }
 }

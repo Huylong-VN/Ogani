@@ -10,7 +10,7 @@ using Ogani.Data;
 namespace Ogani.Migrations
 {
     [DbContext(typeof(OganiDbContext))]
-    [Migration("20220321175405_initial")]
+    [Migration("20220401035626_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -125,14 +125,14 @@ namespace Ogani.Migrations
                         new
                         {
                             Id = new Guid("cc88ab6f-5d66-4c30-a60e-8f5254f1e112"),
-                            ConcurrencyStamp = "a4ba845b-2b89-453b-bb0d-89f9d88625cc",
+                            ConcurrencyStamp = "099b3071-91bc-4d7c-88cf-0cba87a04040",
                             Name = "admin",
                             NormalizedName = "admin"
                         },
                         new
                         {
-                            Id = new Guid("99a2b12b-7840-416d-8cd3-ee56f0367815"),
-                            ConcurrencyStamp = "ca9b01cd-329f-4828-a5af-8d80064be4c2",
+                            Id = new Guid("084cd61b-ff4e-48d0-9cad-c7bca1aba6ce"),
+                            ConcurrencyStamp = "6146b8c7-e5b1-4f00-8d09-d6769ad68b1a",
                             Name = "employee",
                             NormalizedName = "employee"
                         });
@@ -210,14 +210,14 @@ namespace Ogani.Migrations
                         {
                             Id = new Guid("0027068e-4c5d-4ecb-a157-b9cc063cd672"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "d9da6b5c-c532-4d33-9a82-1bbbda07848c",
+                            ConcurrencyStamp = "8051e39a-d950-4499-bd67-59e32d80b51b",
                             CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "admin@gmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "admin@gmail.com",
                             NormalizedUserName = "admin@gmail.com",
-                            PasswordHash = "AQAAAAEAACcQAAAAENtR8OhnSNGCRHS1AHeIgbczFebbdDj3XRP2q1hg6JrQbNKrpb/2IOwIwjYNecRgRQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEGUj1SCce+FuicE99yVA99R33P8HiSmJwEaoEl2CZsOq83jPHg60Q4eGBmxIrps4jg==",
                             PhoneNumber = "02002012",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
@@ -248,6 +248,34 @@ namespace Ogani.Migrations
                         });
                 });
 
+            modelBuilder.Entity("Ogani.Data.Blog", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Content")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreateAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Image")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Blogs");
+                });
+
             modelBuilder.Entity("Ogani.Data.Category", b =>
                 {
                     b.Property<Guid>("Id")
@@ -273,73 +301,37 @@ namespace Ogani.Migrations
                         },
                         new
                         {
-                            Id = new Guid("75905e32-0f69-4221-8149-5951642a5c28"),
+                            Id = new Guid("2c173d90-6530-4212-924b-fd56f2c98bee"),
                             Description = "",
                             Name = "Meat"
                         },
                         new
                         {
-                            Id = new Guid("e13a15df-9c7a-42ef-a113-ae83944d6532"),
+                            Id = new Guid("800691ef-2034-4538-ac88-fd0e224a2f0b"),
                             Description = "",
                             Name = "Oranges"
                         },
                         new
                         {
-                            Id = new Guid("f9487041-c8e4-4f66-a83a-f454a9e63808"),
+                            Id = new Guid("0a44bced-873a-4a8d-a643-d0960971eb62"),
                             Description = "",
                             Name = "Fastfood"
                         },
                         new
                         {
-                            Id = new Guid("fe202495-8a1a-4abb-abfd-38dcb6567199"),
-                            Description = "",
-                            Name = "Fruit & Nut Gifts"
-                        },
-                        new
-                        {
-                            Id = new Guid("db953381-d9ce-4e17-8ec9-ec993a40228e"),
-                            Description = "",
-                            Name = "Fresh Berries"
-                        },
-                        new
-                        {
-                            Id = new Guid("6baa3a43-a231-4728-9027-78d56739cdcc"),
-                            Description = "",
-                            Name = "Ocean Foods"
-                        },
-                        new
-                        {
-                            Id = new Guid("b1b522a0-b716-425b-8323-050e1313bdeb"),
-                            Description = "",
-                            Name = "Butter & Eggs"
-                        },
-                        new
-                        {
-                            Id = new Guid("fc04176f-8a18-4a0f-95ba-171d932e7a9a"),
-                            Description = "",
-                            Name = "Fresh Onion"
-                        },
-                        new
-                        {
-                            Id = new Guid("0651b925-1aea-47f5-9d3c-9a6068719a5e"),
-                            Description = "",
-                            Name = "Oatmeal"
-                        },
-                        new
-                        {
-                            Id = new Guid("b70a84d4-5b07-468b-ab9d-01f34ae68809"),
+                            Id = new Guid("9f8826d8-843f-4ad1-bb64-e1867f9b2089"),
                             Description = "",
                             Name = "Fresh Bananas"
                         },
                         new
                         {
-                            Id = new Guid("4dad28e1-8f33-42ec-a170-780151fdca09"),
+                            Id = new Guid("e6d978ef-5c47-457b-ae2e-a5f39350425d"),
                             Description = "",
                             Name = "Drink Fruits"
                         },
                         new
                         {
-                            Id = new Guid("52c7977f-b7aa-41b4-8aa4-a70ad14e5543"),
+                            Id = new Guid("1afe374c-df83-4ada-87af-b83a61959da6"),
                             Description = "",
                             Name = "Sea Food"
                         });
@@ -350,6 +342,9 @@ namespace Ogani.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Address")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreateAt")
                         .HasColumnType("datetime2");
@@ -363,8 +358,14 @@ namespace Ogani.Migrations
                     b.Property<string>("LastName")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Method")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Phone")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Status")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Total")
                         .HasColumnType("nvarchar(max)");
@@ -422,7 +423,7 @@ namespace Ogani.Migrations
                         new
                         {
                             Id = new Guid("ed040235-219c-48d8-a12d-3ae4d89a2fb9"),
-                            CreateAt = new DateTime(2022, 3, 22, 0, 54, 4, 766, DateTimeKind.Local).AddTicks(2791),
+                            CreateAt = new DateTime(2022, 4, 1, 10, 56, 25, 722, DateTimeKind.Local).AddTicks(510),
                             CurrentPrice = "100",
                             Description = "Feature",
                             Image = "/img/featured/feature-1.jpg",
@@ -434,8 +435,8 @@ namespace Ogani.Migrations
                         },
                         new
                         {
-                            Id = new Guid("f7504697-ba11-44f2-93d9-736849debe95"),
-                            CreateAt = new DateTime(2022, 3, 22, 0, 54, 4, 770, DateTimeKind.Local).AddTicks(583),
+                            Id = new Guid("037ae147-ea1c-4b7d-976b-e0319188f4bc"),
+                            CreateAt = new DateTime(2022, 4, 1, 10, 56, 25, 724, DateTimeKind.Local).AddTicks(4086),
                             CurrentPrice = "500",
                             Description = "Feature",
                             Image = "/img/featured/feature-2.jpg",
@@ -561,6 +562,17 @@ namespace Ogani.Migrations
                     b.Navigation("AppUser");
                 });
 
+            modelBuilder.Entity("Ogani.Data.Blog", b =>
+                {
+                    b.HasOne("Ogani.Data.AppUser", "AppUser")
+                        .WithMany("Blogs")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("AppUser");
+                });
+
             modelBuilder.Entity("Ogani.Data.Order", b =>
                 {
                     b.HasOne("Ogani.Data.AppUser", "AppUser")
@@ -640,6 +652,8 @@ namespace Ogani.Migrations
             modelBuilder.Entity("Ogani.Data.AppUser", b =>
                 {
                     b.Navigation("AppUserRoles");
+
+                    b.Navigation("Blogs");
 
                     b.Navigation("Orders");
                 });

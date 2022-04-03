@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Ogani.Data;
@@ -15,11 +14,6 @@ using System.IO;
 using System.Linq;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
-using System.Collections;
-
-using System.Collections.Generic;
-
-using System.Data.SqlClient;
 
 namespace Ogani.Controllers
 {
@@ -31,7 +25,6 @@ namespace Ogani.Controllers
         private readonly UserManager<AppUser> _userManager;
         private readonly RoleManager<AppRole> _roleManager;
         private readonly IStorageService _storageService;
-        private readonly SqlConnection _conn;
 
         private readonly IWebHostEnvironment _hostEnvironment;
 
@@ -284,7 +277,7 @@ namespace Ogani.Controllers
                 product.Name = await this.SaveFile(Request.Form.Files["Img"]);
                 _dbContext.ProductImages.Update(product);
                 await _dbContext.SaveChangesAsync();
-                return View();
+                return RedirectToAction(nameof(ProductImageDetailCreate));
             }
             return NotFound();
         }
