@@ -70,7 +70,7 @@ namespace Ogani.Controllers
                     {
                         return LocalRedirect(returnUrl);
                     }
-                    if (!this.User.IsInRole("customer"))
+                    if (!this.User.IsInRole(""))
                     {
                         return RedirectToAction("Index", "Admin");
                     }
