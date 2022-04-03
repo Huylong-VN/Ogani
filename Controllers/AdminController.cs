@@ -367,30 +367,6 @@ namespace Ogani.Controllers
             return RedirectToAction(nameof(RoleAssign));
         }
 
-        //Look user
-        [Authorize(Roles = "admin")]
-        public async Task<IActionResult> LookUser(string Id)
-        {
-            var user = await _userManager.FindByIdAsync(Id);
-            if (user != null)
-            {
-                var status = await _userManager.IsLockedOutAsync(user);
-                if (status == false)
-                {
-                    var result = await _userManager.SetLockoutEnabledAsync(user, false);
-                    await _userManager.SetLockoutEndDateAsync(user, DateTimeOffset.UtcNow);
-                    TempData["msg"] = "Unlook Successfully";
-                }
-                else
-                {
-                    var result = await _userManager.SetLockoutEnabledAsync(user, true);
-                    await _userManager.SetLockoutEndDateAsync(user, DateTimeOffset.UtcNow.AddYears(5));
-                    TempData["msg"] = "look Successfully";
-                }
-            }
-            return RedirectToAction(nameof(UserView));
-        }
-
         //Delete user
         [Authorize(Roles = "admin")]
         public async Task<IActionResult> DeleteUser(string Id)
