@@ -74,8 +74,6 @@ namespace Ogani.Repository
 
         public async Task<SignInResult> PasswordSignInAsync(SignInModel signInModel)
         {
-            var countFailed = await _userManager.GetAccessFailedCountAsync(await _userManager.FindByEmailAsync(signInModel.Email));
-            if (countFailed == 2) await _userManager.SetLockoutEnabledAsync(await _userManager.FindByEmailAsync(signInModel.Email), true);
             return await _signInManager.PasswordSignInAsync(signInModel.Email, signInModel.Password, signInModel.RememberMe, true);
         }
 
