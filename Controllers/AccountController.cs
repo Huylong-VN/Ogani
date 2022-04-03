@@ -70,10 +70,6 @@ namespace Ogani.Controllers
                     {
                         return LocalRedirect(returnUrl);
                     }
-                    if (!this.User.IsInRole(""))
-                    {
-                        return RedirectToAction("Index", "Admin");
-                    }
 
                     return RedirectToAction("Index", "Home");
                 }
@@ -240,6 +236,12 @@ namespace Ogani.Controllers
                 }
             }
             return View(model);
+        }
+
+        [Authorize]
+        public IActionResult AccessDenied()
+        {
+            return View();
         }
     }
 }

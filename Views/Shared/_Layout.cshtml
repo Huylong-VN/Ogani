@@ -63,7 +63,7 @@
                     </ul>
                 </li>
                 <li><a asp-action='BlogView'>Blog</a></li>
-                @if (User.IsInRole("Customer") == false && User.Identity.IsAuthenticated)
+                @if (this.User.IsInRole("admin") || this.User.IsInRole("employee") && User.Identity.IsAuthenticated)
                 {
                     <li><a style='color:red;box-shadow: 2px 2px 2px aliceblue;' href="/admin">Area Manage</a></li>
                 }
@@ -142,7 +142,7 @@
                                 </ul>
                             </li>
                              <li><a asp-action='BlogView'>Blog</a></li>
-                            @if (User.IsInRole("Customer") == false && User.Identity.IsAuthenticated)
+                            @if (this.User.IsInRole("admin") || this.User.IsInRole("employee") && User.Identity.IsAuthenticated)
                             {
                                 <li><a style='color:red;box-shadow: 2px 2px 2px aliceblue;' href="/admin">Area Manage</a></li>
                             }

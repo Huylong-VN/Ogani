@@ -133,13 +133,13 @@ namespace Ogani.Data
                 {
                     Id = new Guid("cc88ab6f-5d66-4c30-a60e-8f5254f1e112"),
                     Name = "admin",
-                    NormalizedName = "admin",
+                    NormalizedName = "Admin",
                 });
                 x.HasData(new AppRole()
                 {
                     Id = Guid.NewGuid(),
                     Name = "employee",
-                    NormalizedName = "employee",
+                    NormalizedName = "Employee",
                 });
             });
             builder.Entity<AppUserRole>().HasData(new AppUserRole
