@@ -103,7 +103,7 @@
                                                     $@total
                                                 </td>
                                                 <td class="shoping__cart__item__close">
-                                                    <span class="icon_close"></span>
+                                                    <a asp-action='RemoveFromCart' asp-route-id="@p.Product.Id" class="icon_close"></a>
                                                 </td>
                                             </tr>
                                 }
