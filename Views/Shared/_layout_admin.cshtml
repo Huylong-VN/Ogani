@@ -13,6 +13,7 @@
     <meta name="robots" content="noindex,nofollow">
     <title>Admin</title>
     <link rel="canonical" href="https://www.wrappixel.com/templates/xtreme-admin-lite/" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="~/img/logo.png">
     <!-- Custom CSS -->
@@ -162,13 +163,13 @@
                         <li class="sidebar-item">
                             <a class="sidebar-link waves-effect waves-dark sidebar-link"
                                href="/admin" aria-expanded="false">
-                                <i class="mdi mdi-view-dashboard"></i><span class="hide-menu">Dashboard</span>
+                                <i class="fa-solid fa-chart-line"></i><span class="hide-menu">Dashboard</span>
                             </a>
                         </li>
                         <li class="sidebar-item">
                             <a class="sidebar-link waves-effect waves-dark sidebar-link"
                                href="/admin/productview" aria-expanded="false">
-                                <i class="mdi mdi-view-dashboard"></i><span class="hide-menu">Product</span>
+                                <i class="fa-brands fa-product-hunt"></i><span class="hide-menu">Product</span>
                             </a>
                         </li>
                         @if (User.IsInRole("admin") && User.Identity.IsAuthenticated)
@@ -176,26 +177,26 @@
                             <li class="sidebar-item">
                                 <a class="sidebar-link waves-effect waves-dark sidebar-link"
                                href="/admin/userview" aria-expanded="false">
-                                    <i class="mdi mdi-view-dashboard"></i><span class="hide-menu">Manage User</span>
+                                    <i class="fa-solid fa-people-roof"></i><span class="hide-menu">Manage User</span>
                                 </a>
                             </li>
                         }
                         <li class="sidebar-item">
                             <a class="sidebar-link waves-effect waves-dark sidebar-link"
                                asp-action="SupplierView" aria-expanded="false">
-                                <i class="mdi mdi-account-network"></i><span class="hide-menu">Supplier</span>
+                                <i class="fa-solid fa-house-user"></i><span class="hide-menu">Supplier</span>
                             </a>
                         </li>
                         <li class="sidebar-item">
                             <a class="sidebar-link waves-effect waves-dark sidebar-link"
                                asp-action="BlogView" aria-expanded="false">
-                                <i class="mdi mdi-account-network"></i><span class="hide-menu">Blog</span>
+                                <i class="fa-solid fa-blog"></i><span class="hide-menu">Blog</span>
                             </a>
                         </li>
                         <li class="sidebar-item">
                             <a class="sidebar-link waves-effect waves-dark sidebar-link"
                                href="/" aria-expanded="false">
-                                <i class="mdi mdi-alert-outline"></i><span class="hide-menu">Home</span>
+                                <i class="fa-solid fa-house"></i><span class="hide-menu">Home</span>
                             </a>
                         </li>
                     </ul>
