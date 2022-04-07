@@ -19,6 +19,7 @@
                     <div>
                         <h4 class="card-title">Top Selling Products</h4>
                         <h5 class="card-subtitle">Overview of Top Selling Items</h5>
+                          <a class='btn btn-primary' asp-action="SupplierCreate">Create</a>
                     </div>
                 </div>
                 <!-- title -->
@@ -53,8 +54,8 @@
                                             Menu
                                         </button>
                                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                            <li><a class="dropdown-item" href="#">Update</a></li>
-                                            <li><a class="dropdown-item" href="#">Delete</a></li>
+                                            <li><a class="dropdown-item" asp-action='SupplierUpdate' asp-route-id=@supplier.Id>Update</a></li>
+                                            <li><a class="dropdown-item" asp-action='SupplierDelete' asp-route-id=@supplier.Id>Delete</a></li>
                                         </ul>
                                     </div>
                                 </td>

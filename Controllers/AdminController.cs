@@ -535,6 +535,40 @@ namespace Ogani.Controllers
                 TotalRecords = query.Count()
             });
         }
+        [HttpGet]
+        public IActionResult SupplierCreate()
+        {
+            return View();
+        }
+
+        public async Task<IActionResult> SupplierCreate(Supplier supplier)
+        {
+            await _dbContext.Suppliers.AddAsync(supplier);
+            await _dbContext.SaveChangesAsync();
+            return RedirectToAction(nameof(SupplierView));
+        }
+        [HttpGet]
+        public IActionResult SupplierUpdate(Guid Id)
+        {
+            var supplier = _dbContext.Suppliers.Find(Id);
+            return View(supplier);
+        }
+
+        public async Task<IActionResult> SupplierUpdate(Supplier supplier)
+        {
+            _dbContext.Suppliers.Update(supplier);
+            await _dbContext.SaveChangesAsync();
+            return RedirectToAction(nameof(SupplierView));
+        }
+
+        public IActionResult SupplierDelete(Guid Id)
+        {
+            var supplier = _dbContext.Suppliers.Find(Id);
+            if (supplier == null) return NotFound();
+            _dbContext.Suppliers.Remove(supplier);
+            _dbContext.SaveChanges();
+            return RedirectToAction(nameof(SupplierView));
+        }
 
         [HttpPost]
         public ActionResult UploadImage(List<IFormFile> fIles)
