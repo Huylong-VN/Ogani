@@ -311,6 +311,14 @@ namespace Ogani.Controllers
             }
             return -1;
         }
+        public IActionResult RemoveFromCart(Guid id)
+        {
+            List<Item> cart = SessionHelper.GetObjectFromJson<List<Item>>(HttpContext.Session, "cart");
+            int index = isExist(id);
+            cart.RemoveAt(index);
+            SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
+            return RedirectToAction(nameof(ShoppingCart));
+        }
 
         public IActionResult ShoppingCart()
         {
