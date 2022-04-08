@@ -317,6 +317,9 @@ namespace Ogani.Controllers
             int index = isExist(id);
             cart.RemoveAt(index);
             SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
+               HttpContext.Session.SetString("toTal", SessionHelper.GetObjectFromJson<List<Item>>(HttpContext.Session, "cart").Count.ToString());
+
+            HttpContext.Session.SetString("toTalPrice", SessionHelper.GetObjectFromJson<List<Item>>(HttpContext.Session, "cart").Sum(x => (long)Convert.ToDouble(x.Product.CurrentPrice) * x.Quantity).ToString());
             return RedirectToAction(nameof(ShoppingCart));
         }
 
@@ -418,6 +421,9 @@ namespace Ogani.Controllers
 
             if (Request.Form["method"].Equals("0"))
             {
+                HttpContext.Session.Remove("cart");
+                HttpContext.Session.Remove("toTal");
+                HttpContext.Session.Remove("toTalPrice");
                 return RedirectToAction(nameof(ConfirmPaymentClient));
             }
             //request params need to request to MoMo system
@@ -479,6 +485,9 @@ namespace Ogani.Controllers
             //hiển thị thông báo cho người dùng
             if(errorCode == 0)
             {
+                HttpContext.Session.Remove("cart");
+                HttpContext.Session.Remove("toTal");
+                HttpContext.Session.Remove("toTalPrice");
                 TempData["mess"] = "Order SuccessFully";
             }
             else
