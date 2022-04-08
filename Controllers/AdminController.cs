@@ -51,7 +51,7 @@ namespace Ogani.Controllers
 
         public async Task<IActionResult> Index(string keyword, string sorting = null, int p = 1, int s = 10)
         {
-            var query = _dbContext.Orders.Include(x => x.ProductOrders).ThenInclude(x => x.Product).Include(x=>x.AppUser).AsQueryable();
+            var query = _dbContext.Orders.Include(x => x.ProductOrders).ThenInclude(x => x.Product).Include(x => x.AppUser).AsQueryable();
             if (!string.IsNullOrWhiteSpace(keyword))
             {
                 query = query.Where(x => x.Email.Contains(keyword) || x.Address.Contains(keyword) ||
@@ -101,7 +101,7 @@ namespace Ogani.Controllers
 
             foreach (var order in orders)
             {
-                dt.Rows.Add(order.FirstName+order.LastName, order.Email, order.Phone, order.AppUser.UserName, order.CreateAt);
+                dt.Rows.Add(order.FirstName + order.LastName, order.Email, order.Phone, order.AppUser.UserName, order.CreateAt);
             }
 
             using (XLWorkbook wb = new XLWorkbook())
@@ -110,10 +110,11 @@ namespace Ogani.Controllers
                 using (MemoryStream stream = new MemoryStream())
                 {
                     wb.SaveAs(stream);
-                    return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", DateTime.Now.Date+".xlsx");
+                    return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Report Orders "+DateTime.Now.ToString("MM/dd/yyyy") + ".xlsx");
                 }
             }
         }
+
         public async Task<IActionResult> ProductView(string keyword, string sorting = null, int p = 1, int s = 10)
         {
             var query = _dbContext.Products.Include(x => x.ProductImages).Include(x => x.ProductCategories).
