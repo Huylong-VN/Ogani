@@ -1,7 +1,7 @@
 ﻿@model Ogani.ViewModel.ProductUpdateRequest
 @{
     Layout = "~/Views/Shared/_layout_admin.cshtml"; ViewData["page"] = "Product";
-    ViewData["Expand"] = "ViewList";
+    ViewData["Expand"] = "ProductCreat";
 }
 
 <h1>ProductCreate</h1>
@@ -67,7 +67,7 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="ProductView">Back to List</a>
 </div>
 @section Scripts{
 <script>
