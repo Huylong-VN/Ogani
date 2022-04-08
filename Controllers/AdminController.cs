@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using ClosedXML.Excel;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -10,6 +11,7 @@ using Ogani.Service;
 using Ogani.ViewModel;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -47,8 +49,23 @@ namespace Ogani.Controllers
             return fileName;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string keyword, string sorting = null, int p = 1, int s = 10)
         {
+            var query = _dbContext.Orders.Include(x => x.ProductOrders).ThenInclude(x => x.Product).Include(x=>x.AppUser).AsQueryable();
+            if (!string.IsNullOrWhiteSpace(keyword))
+            {
+                query = query.Where(x => x.Email.Contains(keyword) || x.Address.Contains(keyword) ||
+                x.AppUser.UserName.Contains(keyword));
+            }
+
+            ViewBag.Orders = await query.Skip((p - 1) * s).Take(s).ToListAsync();
+            return View(new PagedResultBase()
+            {
+                PageIndex = p,
+                Keyword = keyword,
+                PageSize = s,
+                TotalRecords = query.Count()
+            });
             return View();
         }
 
@@ -67,6 +84,36 @@ namespace Ogani.Controllers
             return Json(result);
         }
 
+        public async Task<IActionResult> ExportToExcelOrder()
+        {
+            DateTime startDate = DateTime.Parse(Request.Form["startDate"]);
+            DateTime endDate = DateTime.Parse(Request.Form["endDate"]);
+            DataTable dt = new DataTable("Grid");
+            dt.Columns.AddRange(new DataColumn[5] { new DataColumn("FullName"),
+                                        new DataColumn("Email"),
+                                        new DataColumn("Phone"),
+                                        new DataColumn("UserName"),
+                                        new DataColumn("CreateAt")});
+
+            var orders = _dbContext.Orders.Include(x => x.ProductOrders).ThenInclude(x => x.Product).
+                Include(x => x.AppUser).Where(x => x.CreateAt.Date >= startDate.Date && x.CreateAt.Date <= endDate.Date)
+                .ToList();
+
+            foreach (var order in orders)
+            {
+                dt.Rows.Add(order.FirstName+order.LastName, order.Email, order.Phone, order.AppUser.UserName, order.CreateAt);
+            }
+
+            using (XLWorkbook wb = new XLWorkbook())
+            {
+                wb.Worksheets.Add(dt);
+                using (MemoryStream stream = new MemoryStream())
+                {
+                    wb.SaveAs(stream);
+                    return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", DateTime.Now.Date+".xlsx");
+                }
+            }
+        }
         public async Task<IActionResult> ProductView(string keyword, string sorting = null, int p = 1, int s = 10)
         {
             var query = _dbContext.Products.Include(x => x.ProductImages).Include(x => x.ProductCategories).

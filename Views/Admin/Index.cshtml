@@ -19,11 +19,11 @@
                     </div>
                     <div class="ms-auto">
                         <div class="dl">
-                           <form class='form-group' onsubmit='return false'>
-                               <input type='date' id='startDate' required class='form-control' placeholder='StartDate'/>
-                               <input type='date' id='endDate' required class='form-control' placeholder='EndDate'/>
-                               <button id='onStatic' class='btn btn-primary'>Submit</button>
-                           </form>
+                            <form class='form-group' onsubmit='return false'>
+                                <input type='date' id='startDate' required class='form-control' placeholder='StartDate' />
+                                <input type='date' id='endDate' required class='form-control' placeholder='EndDate' />
+                                <button id='onStatic' class='btn btn-primary'>Submit</button>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -32,22 +32,64 @@
             <canvas id="myChart" width="400" height="100"></canvas>
         </div>
     </div>
-
-    <!-- column -->
+     <!-- column -->
     <div class="col-12">
         <div class="card">
             <div class="card-body">
                 <!-- title -->
-                <div class="d-md-flex">
+                <div class="">
                     <div>
-                        <h4 class="card-title">Revenue Statistics</h4>
+                        <h4 class="card-title">Order Statistics with Table</h4>
                         <h5 class="card-subtitle">Overview of Revenue Statistics</h5>
+                        <form class='form-group' asp-action='ExportToExcelOrder'>
+                                <input type='date' name='startDate' required class='form-control' placeholder='StartDate' />
+                                <input type='date' name='endDate' required class='form-control' placeholder='EndDate' />
+                                <button class='btn btn-primary mt-2 mb-3'>Export Excel</button>
+                         </form>
                     </div>
-                    <div class="ms-auto">
-                        <div class="dl">
-                          
-                        </div>
-                    </div>
+                      <div class="table-responsive">
+                                <table class="table v-middle">
+                                    <thead>
+                                        <tr class="bg-light">
+                                            <th class="border-top-0">FullName</th>
+                                            <th class="border-top-0">Email</th>
+                                            <th class="border-top-0">Phone</th>
+                                            <th class="border-top-0">UserName</th>
+                                            <th class="border-top-0">CreateAt</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var order in ViewBag.Orders)
+                                        {
+                                            <tr>
+                                                <td>
+                                                    <div class="d-flex align-items-center">
+                                                        <div class="m-r-10">
+                                                            <a class="btn btn-circle d-flex btn-info text-white"><img src=/store-image/@order.AppUser.Avatar /></a>
+                                                        </div>
+                                                        <div class="">
+                                                            <h4 class="m-b-0 font-16">@order.FirstName @order.LastName</h4>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>@order.Email</td>
+                                                <td>@order.Phone</td>
+                                                <td>@order.AppUser.UserName</td>
+                                                <td>@order.CreateAt</td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                            <paging total-records="Model.TotalRecords" page-no="Model.PageIndex"
+                                    max-displayed-pages="5"
+                                    page-size="Model.PageSize"
+                                    page-size-dropdown-items="5-15-30"
+                                    show-total-pages="false"
+                                    show-page-size-nav="false"
+                                    show-total-records="false"
+                                    class="float-right">
+                            </paging>
                 </div>
                 <!-- title -->
             </div>
@@ -55,6 +97,7 @@
             </table>
         </div>
     </div>
+   
 </div>
 <!-- ============================================================== -->
 <!-- Table -->
