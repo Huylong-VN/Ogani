@@ -89,11 +89,13 @@ namespace Ogani.Controllers
             DateTime startDate = DateTime.Parse(Request.Form["startDate"]);
             DateTime endDate = DateTime.Parse(Request.Form["endDate"]);
             DataTable dt = new DataTable("Grid");
-            dt.Columns.AddRange(new DataColumn[5] { new DataColumn("FullName"),
+            dt.Columns.AddRange(new DataColumn[7] { new DataColumn("FullName"),
                                         new DataColumn("Email"),
                                         new DataColumn("Phone"),
                                         new DataColumn("UserName"),
-                                        new DataColumn("CreateAt")});
+                                        new DataColumn("CreateAt"),
+                                        new DataColumn("Method Payment"),
+                                        new DataColumn("Status")});
 
             var orders = _dbContext.Orders.Include(x => x.ProductOrders).ThenInclude(x => x.Product).
                 Include(x => x.AppUser).Where(x => x.CreateAt.Date >= startDate.Date && x.CreateAt.Date <= endDate.Date)
@@ -101,7 +103,7 @@ namespace Ogani.Controllers
 
             foreach (var order in orders)
             {
-                dt.Rows.Add(order.FirstName + order.LastName, order.Email, order.Phone, order.AppUser.UserName, order.CreateAt);
+                dt.Rows.Add(order.FirstName + order.LastName, order.Email, order.Phone, order.AppUser.UserName, order.CreateAt, order.Method == "0" ? "Delivery" : "Momo", order.Status == false ? "During Processing" : "Done");
             }
 
             using (XLWorkbook wb = new XLWorkbook())
@@ -110,9 +112,29 @@ namespace Ogani.Controllers
                 using (MemoryStream stream = new MemoryStream())
                 {
                     wb.SaveAs(stream);
-                    return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Report Orders "+DateTime.Now.ToString("MM/dd/yyyy") + ".xlsx");
+                    return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Report Orders " + DateTime.Now.ToString("MM/dd/yyyy") + ".xlsx");
                 }
             }
+        }
+
+        public async Task<IActionResult> OrderView(string keyword, string sorting = null, int p = 1, int s = 10)
+        {
+            var query = _dbContext.Orders.Include(x => x.ProductOrders).ThenInclude(x => x.Product).Include(x => x.AppUser).AsQueryable();
+            if (!string.IsNullOrWhiteSpace(keyword))
+            {
+                query = query.Where(x => x.Email.Contains(keyword) || x.Address.Contains(keyword) ||
+                x.AppUser.UserName.Contains(keyword));
+            }
+
+            ViewBag.Orders = await query.Skip((p - 1) * s).Take(s).ToListAsync();
+            return View(new PagedResultBase()
+            {
+                PageIndex = p,
+                Keyword = keyword,
+                PageSize = s,
+                TotalRecords = query.Count()
+            });
+            return View();
         }
 
         public async Task<IActionResult> ProductView(string keyword, string sorting = null, int p = 1, int s = 10)

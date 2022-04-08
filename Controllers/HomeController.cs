@@ -311,13 +311,14 @@ namespace Ogani.Controllers
             }
             return -1;
         }
+
         public IActionResult RemoveFromCart(Guid id)
         {
             List<Item> cart = SessionHelper.GetObjectFromJson<List<Item>>(HttpContext.Session, "cart");
             int index = isExist(id);
             cart.RemoveAt(index);
             SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
-               HttpContext.Session.SetString("toTal", SessionHelper.GetObjectFromJson<List<Item>>(HttpContext.Session, "cart").Count.ToString());
+            HttpContext.Session.SetString("toTal", SessionHelper.GetObjectFromJson<List<Item>>(HttpContext.Session, "cart").Count.ToString());
 
             HttpContext.Session.SetString("toTalPrice", SessionHelper.GetObjectFromJson<List<Item>>(HttpContext.Session, "cart").Sum(x => (long)Convert.ToDouble(x.Product.CurrentPrice) * x.Quantity).ToString());
             return RedirectToAction(nameof(ShoppingCart));
@@ -481,19 +482,21 @@ namespace Ogani.Controllers
         //Khi thanh toán xong ở cổng thanh toán Momo, Momo sẽ trả về một số thông tin, trong đó có errorCode để check thông tin thanh toán
         //errorCode = 0 : thanh toán thành công (Request.QueryString["errorCode"])
         //Tham khảo bảng mã lỗi tại: https://developers.momo.vn/#/docs/aio/?id=b%e1%ba%a3ng-m%c3%a3-l%e1%bb%97i
-        public ActionResult ConfirmPaymentClient(int errorCode)
+        public async Task<ActionResult> ConfirmPaymentClient(int errorCode, Guid orderId)
         {
             //hiển thị thông báo cho người dùng
-            if(errorCode == 0)
+            if (errorCode == 0)
             {
                 HttpContext.Session.Remove("cart");
                 HttpContext.Session.Remove("toTal");
                 HttpContext.Session.Remove("toTalPrice");
-                TempData["mess"] = "Order SuccessFully";
+                TempData["id"] = orderId;
             }
             else
             {
-                TempData["mess"] = "Order Failed";
+                _dbContext.Orders.Remove(_dbContext.Orders.Find(orderId));
+                await _dbContext.SaveChangesAsync();
+                TempData["mess"] = "Order just canceled";
             }
             return View();
         }
