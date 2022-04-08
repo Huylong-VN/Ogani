@@ -421,6 +421,7 @@ namespace Ogani.Controllers
 
             if (Request.Form["method"].Equals("0"))
             {
+                await _dbContext.SaveChangesAsync();
                 HttpContext.Session.Remove("cart");
                 HttpContext.Session.Remove("toTal");
                 HttpContext.Session.Remove("toTalPrice");
@@ -473,7 +474,7 @@ namespace Ogani.Controllers
             string responseFromMomo = PaymentRequest.sendPaymentRequest(endpoint, message.ToString());
 
             JObject jmessage = JObject.Parse(responseFromMomo);
-
+            await _dbContext.SaveChangesAsync();
             return Redirect(jmessage.GetValue("payUrl").ToString());
         }
 
