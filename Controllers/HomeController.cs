@@ -421,6 +421,9 @@ namespace Ogani.Controllers
 
             if (Request.Form["method"].Equals("0"))
             {
+                HttpContext.Session.Remove("cart");
+                HttpContext.Session.Remove("toTal");
+                HttpContext.Session.Remove("toTalPrice");
                 return RedirectToAction(nameof(ConfirmPaymentClient));
             }
             //request params need to request to MoMo system
@@ -482,6 +485,9 @@ namespace Ogani.Controllers
             //hiển thị thông báo cho người dùng
             if(errorCode == 0)
             {
+                HttpContext.Session.Remove("cart");
+                HttpContext.Session.Remove("toTal");
+                HttpContext.Session.Remove("toTalPrice");
                 TempData["mess"] = "Order SuccessFully";
             }
             else
