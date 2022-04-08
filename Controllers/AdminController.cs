@@ -78,7 +78,7 @@ namespace Ogani.Controllers
                  {
                      Total = x.Count(),
                      //CreateAt = CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(x.Key.Time)
-                     CreateAt = x.Key.Time
+                     CreateAt = x.Key.Time.ToString("MM/dd/yyyy")
                  }).ToListAsync();
 
             return Json(result);
