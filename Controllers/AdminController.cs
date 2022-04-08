@@ -10,6 +10,7 @@ using Ogani.Service;
 using Ogani.ViewModel;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net.Http.Headers;
@@ -46,19 +47,24 @@ namespace Ogani.Controllers
             return fileName;
         }
 
-        public async Task<IActionResult> Index(int Yeah = 2022)
+        public async Task<IActionResult> Index()
         {
-            // Thống kê theo Order, dựa theo tháng
+            return View();
+        }
 
-            var result = _dbContext.Orders.Include(x => x.ProductOrders).ThenInclude(x => x.Product)
-                .Where(x => x.CreateAt.Year.Equals(Yeah))
-                .GroupBy(x => new { createAt = x.CreateAt.Month }).Select(x => new
-                {
-                    month = x.Key.createAt,
-                    count = x.Count()
-                }).ToList();
+        [Route("/admin/getreport")]
+        public async Task<IActionResult> GetReport(DateTime startDate, DateTime endDate)
+        {
+            var result = await _dbContext.Orders.Include(x => x.ProductOrders).ThenInclude(x => x.Product)
+                 .Where(x => x.CreateAt.Date >= startDate.Date && x.CreateAt.Date <= endDate.Date).OrderByDescending(x => x.CreateAt).
+                 GroupBy(x => new { Time = x.CreateAt.Date }).Select(x => new
+                 {
+                     Total = x.Count(),
+                     //CreateAt = CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(x.Key.Time)
+                     CreateAt = x.Key.Time
+                 }).ToListAsync();
 
-            return View(result);
+            return Json(result);
         }
 
         public async Task<IActionResult> ProductView(string keyword, string sorting = null, int p = 1, int s = 10)
@@ -535,6 +541,7 @@ namespace Ogani.Controllers
                 TotalRecords = query.Count()
             });
         }
+
         [HttpGet]
         public IActionResult SupplierCreate()
         {
@@ -547,6 +554,7 @@ namespace Ogani.Controllers
             await _dbContext.SaveChangesAsync();
             return RedirectToAction(nameof(SupplierView));
         }
+
         [HttpGet]
         public IActionResult SupplierUpdate(Guid Id)
         {

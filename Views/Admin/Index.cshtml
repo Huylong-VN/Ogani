@@ -19,12 +19,11 @@
                     </div>
                     <div class="ms-auto">
                         <div class="dl">
-                            <select class="form-select shadow-none">
-                                <option value="0" selected>Monthly</option>
-                                <option value="1">Daily</option>
-                                <option value="2">Weekly</option>
-                                <option value="3">Yearly</option>
-                            </select>
+                           <form class='form-group' onsubmit='return false'>
+                               <input type='date' id='startDate' required class='form-control' placeholder='StartDate'/>
+                               <input type='date' id='endDate' required class='form-control' placeholder='EndDate'/>
+                               <button id='onStatic' class='btn btn-primary'>Submit</button>
+                           </form>
                         </div>
                     </div>
                 </div>
@@ -46,19 +45,13 @@
                     </div>
                     <div class="ms-auto">
                         <div class="dl">
-                            <select class="form-select shadow-none">
-                                <option value="0" selected>Monthly</option>
-                                <option value="1">Daily</option>
-                                <option value="2">Weekly</option>
-                                <option value="3">Yearly</option>
-                            </select>
+                          
                         </div>
                     </div>
                 </div>
                 <!-- title -->
             </div>
             <table>
-
             </table>
         </div>
     </div>
@@ -67,56 +60,59 @@
 <!-- Table -->
 @section Scripts{
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.0/moment.min.js" integrity="sha512-Izh34nqeeR7/nwthfeE0SI3c8uhFSnqxV0sI9TvTcXiFJkMd6fB644O64BRq2P/LA/+7eRvCw4GmLsXksyTHBg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script>
-     const ctx = document.getElementById('myChart').getContext('2d');
-    const myChart = new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
-            datasets: [{
-                label: '# of Votes',
-                data: [12, 19, 3, 5, 2, 3],
-                backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                    'rgba(255, 159, 64, 0.2)'
-                ],
-                borderColor: [
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(153, 102, 255, 1)',
-                    'rgba(255, 159, 64, 1)'
-                ],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
-            }
-        }
-    });
-  
-    function addData(chart, data) {
-    chart.data.datasets.forEach((dataset) => {
-        dataset.data.push(data);
-    });
+   $("#onStatic").click((e) => {
+     const startDate = $("#startDate").val()
+     const endDate = $("#endDate").val()
+     if (startDate && endDate) {
+       if (document.getElementById('myChart')) {
+              $('#myChart').replaceWith($('<canvas id="myChart" height="320px"></canvas>'));
+         }
+         getReport(startDate, endDate);
+     }
+ })
+
+function getReport(startDate, endDate) {
+	$.ajax({
+		url: `/admin/getreport?startDate=${startDate}&endDate=${endDate}`,
+		type: 'get',
+		success: function (response) {
+			console.log(response)
+			RegisterChartProduct(response)
+		}
+	})
+}
+getReport(moment().subtract(30, "days").format('MM-DD-YYYY'), moment().format('MM-DD-YYYY'));
+
+var lsLabel = [];
+var LsDataSource = [];
+
+function RegisterChartProduct(lsData) {
+	lsLabel = [];
+	LsDataSource = [];
+	lsData.map((item) => {
+		lsLabel.push(item.createAt);
+		LsDataSource.push(item.total)
+	})
+
+	const ctx = document.getElementById('myChart');
+
+      
+	var barChartData = {
+		labels: lsLabel,
+		datasets: [{
+			label: "Order statistics",
+			backgroundColor: "#0b9663",
+			borderWidth: 1,
+			data: LsDataSource
+		}]
+	};
+	var myBarChart = new Chart(ctx, {
+		type: 'bar',
+		data: barChartData
+	})
 }
 
-    function removeData(chart) {
-        chart.data.labels.pop();
-        chart.data.datasets.forEach((dataset) => {
-            dataset.data.pop();
-        });
-        chart.update();
-    }
- 
 </script>
 }
