@@ -508,6 +508,11 @@ namespace Ogani.Controllers
             //cập nhật dữ liệu vào db
         }
 
+        public IActionResult Profile()
+        {
+            return View();
+        }
+
         public IActionResult Privacy()
         {
             return View();

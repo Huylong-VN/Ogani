@@ -63,6 +63,10 @@
                     </ul>
                 </li>
                 <li><a asp-action='BlogView'>Blog</a></li>
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <li><a style='color:red;box-shadow: 2px 2px 2px aliceblue;' href="/admin">Area Profile</a></li>
+                }
                 @if (this.User.IsInRole("admin") || this.User.IsInRole("employee") && User.Identity.IsAuthenticated)
                 {
                     <li><a style='color:red;box-shadow: 2px 2px 2px aliceblue;' href="/admin">Area Manage</a></li>
@@ -142,6 +146,10 @@
                                 </ul>
                             </li>
                              <li><a asp-action='BlogView'>Blog</a></li>
+                              @if (User.Identity.IsAuthenticated)
+                                {
+                                    <li><a style='color:blue;box-shadow: 2px 2px 2px aliceblue;' href="/home/profile">Profile</a></li>
+                                }
                             @if (this.User.IsInRole("admin") || this.User.IsInRole("employee") && User.Identity.IsAuthenticated)
                             {
                                 <li><a style='color:red;box-shadow: 2px 2px 2px aliceblue;' href="/admin">Area Manage</a></li>
