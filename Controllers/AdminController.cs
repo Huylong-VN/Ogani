@@ -136,6 +136,7 @@ namespace Ogani.Controllers
             });
             return View();
         }
+
         public async Task<IActionResult> UpdateOrderStatus(Guid Id)
         {
             var order = await _dbContext.Orders.FindAsync(Id);
@@ -144,6 +145,7 @@ namespace Ogani.Controllers
             await _dbContext.SaveChangesAsync();
             return RedirectToAction(nameof(OrderView));
         }
+
         public async Task<IActionResult> ProductView(string keyword, string sorting = null, int p = 1, int s = 10)
         {
             var query = _dbContext.Products.Include(x => x.ProductImages).Include(x => x.ProductCategories).
@@ -364,6 +366,52 @@ namespace Ogani.Controllers
             }
             return NotFound();
         }
+
+        //Category
+        // Product Detail Image
+        public async Task<IActionResult> ProductCategoryDetail(Guid Id)
+        {
+            var categories = _dbContext.Categories.ToList();
+            var categoryOfProduct = _dbContext.Categories.Include(x => x.ProductCategories).
+                Where(x => x.ProductCategories.Any(x => x.ProductId.Equals(Id))).ToList();
+            var categoryAssignRequest = new CategoryAssignRequest();
+            foreach (var category in categories)
+            {
+                categoryAssignRequest.Categories.Add(new SelectItem()
+                {
+                    Id = category.Id.ToString(),
+                    Name = category.Name,
+                    Selected = categoryOfProduct.Contains(category)
+                });
+            }
+            return View(categoryAssignRequest);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ProductCategoryDetail(Guid Id, CategoryAssignRequest request)
+        {
+            var productCategory = _dbContext.ProductCategories.Where(x => x.ProductId.Equals(Id)).ToList();
+            if (productCategory != null)
+            {
+                _dbContext.ProductCategories.RemoveRange(productCategory);
+                foreach (var category in request.Categories)
+                {
+                    if (category.Selected == true)
+                    {
+                        _dbContext.ProductCategories.Add(new ProductCategory()
+                        {
+                            CategoryId = Guid.Parse(category.Id),
+                            ProductId = Id
+                        });
+                    }
+                }
+                await _dbContext.SaveChangesAsync();
+                return RedirectToAction(nameof(ProductCategoryDetail));
+            }
+            return NotFound();
+        }
+
+        //End categoryProduct
 
         [Authorize(Roles = "admin")]
         public async Task<IActionResult> UserView(string keyword, string sorting = null, int p = 1, int s = 10)
