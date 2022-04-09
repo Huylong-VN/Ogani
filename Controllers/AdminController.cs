@@ -136,7 +136,14 @@ namespace Ogani.Controllers
             });
             return View();
         }
-
+        public async Task<IActionResult> UpdateOrderStatus(Guid Id)
+        {
+            var order = await _dbContext.Orders.FindAsync(Id);
+            order.Status = !order.Status;
+            _dbContext.Orders.Update(order);
+            await _dbContext.SaveChangesAsync();
+            return RedirectToAction(nameof(OrderView));
+        }
         public async Task<IActionResult> ProductView(string keyword, string sorting = null, int p = 1, int s = 10)
         {
             var query = _dbContext.Products.Include(x => x.ProductImages).Include(x => x.ProductCategories).

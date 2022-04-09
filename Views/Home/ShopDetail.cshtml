@@ -108,7 +108,15 @@
                             </div>
                         </div>
                         <input type='hidden' value='@Model.Id' name='productId' />
-                        <button class="btn primary-btn">ADD TO CARD</button>
+                        @if(Model.ToTalRemaining == 0)
+                        {
+                            <button disabled class="btn primary-btn">ADD TO CARD</button>
+                            <small>Product is out of stock</small>
+                        }
+                        else
+                        {
+                            <button class="btn primary-btn">ADD TO CARD</button>
+                        }
                         <ul>
                             <li><b>Availability</b> <span>In Stock</span></li>
                             <li><b>Shipping</b> <span>01 day shipping. <samp>Free pickup today</samp></span></li>
