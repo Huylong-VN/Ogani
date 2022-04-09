@@ -136,7 +136,7 @@
                         <li class="sidebar-item">
                             <a class="sidebar-link waves-effect waves-dark sidebar-link"
                                href="/admin/productview" aria-expanded="false">
-                                <i class="fa-brands fa-product-hunt"></i><span class="hide-menu">Product</span>
+                                <i class="fa-brands fa-product-hunt"></i><span class="hide-menu">Manage Product</span>
                             </a>
                         </li>
                         @if (User.IsInRole("admin") && User.Identity.IsAuthenticated)
@@ -150,20 +150,20 @@
                             <li class="sidebar-item">
                                 <a class="sidebar-link waves-effect waves-dark sidebar-link"
                                href="/admin/orderview" aria-expanded="false">
-                                    <i class="fa-solid fa-people-roof"></i><span class="hide-menu">Manage Order</span>
+                                    <i class="fa-solid fa-truck-fast"></i><span class="hide-menu">Manage Order</span>
                                 </a>
                             </li>
                         }
                         <li class="sidebar-item">
                             <a class="sidebar-link waves-effect waves-dark sidebar-link"
                                asp-action="SupplierView" aria-expanded="false">
-                                <i class="fa-solid fa-house-user"></i><span class="hide-menu">Supplier</span>
+                                <i class="fa-solid fa-house-user"></i><span class="hide-menu">Manage Supplier</span>
                             </a>
                         </li>
                         <li class="sidebar-item">
                             <a class="sidebar-link waves-effect waves-dark sidebar-link"
                                asp-action="BlogView" aria-expanded="false">
-                                <i class="fa-solid fa-blog"></i><span class="hide-menu">Blog</span>
+                                <i class="fa-solid fa-blog"></i><span class="hide-menu">Manage Blog</span>
                             </a>
                         </li>
                         <li class="sidebar-item">
