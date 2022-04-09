@@ -20,8 +20,8 @@
                     <div class="ms-auto">
                         <div class="dl">
                             <form class='form-group' onsubmit='return false'>
-                                <input type='date' id='startDate' required class='form-control' placeholder='StartDate' />
-                                <input type='date' id='endDate' required class='form-control' placeholder='EndDate' />
+                                <h >Start Date</h><input type='date' id='startDate' required class='form-control' placeholder='StartDate' />
+                                <h >End Date</h><input type='date' id='endDate' required class='form-control' placeholder='EndDate' />
                                 <button id='onStatic' class='btn btn-primary'>Submit</button>
                             </form>
                         </div>
@@ -42,8 +42,8 @@
                         <h4 class="card-title">Order Statistics with Table</h4>
                         <h5 class="card-subtitle">Overview of Revenue Statistics</h5>
                         <form class='form-group' asp-action='ExportToExcelOrder'>
-                            <input type='date' name='startDate' required class='form-control' placeholder='StartDate' />
-                            <input type='date' name='endDate' required class='form-control' placeholder='EndDate' />
+                            <h>Start Date</h><input type='date' name='startDate' required class='form-control' placeholder='StartDate' />
+                            <h>End Date</h><input type='date' name='endDate' required class='form-control' placeholder='EndDate' />
                             <button class='btn btn-primary mt-2 mb-3'>Export Excel</button>
                         </form>
                     </div>
@@ -67,7 +67,7 @@
                                         <td>
                                             <div class="d-flex align-items-center">
                                                 <div class="m-r-10">
-                                                    <a class="btn btn-circle d-flex btn-info text-white"><img src=/store-image/@order.AppUser.Avatar /></a>
+                                                    <img src="~/admin/assets/images/users/avarta.jpg" alt="user" class="rounded-circle" width="31">
                                                 </div>
                                                 <div class="">
                                                     <h4 class="m-b-0 font-16">@order.FirstName @order.LastName</h4>

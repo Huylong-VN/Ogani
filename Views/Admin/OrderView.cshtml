@@ -3,8 +3,8 @@
 *@
 @{
     Layout = "~/Views/Shared/_layout_admin.cshtml";
-    ViewData["page"] = "Product";
-    ViewData["Expand"] = "ProductView";
+    ViewData["page"] = "Order";
+    ViewData["Expand"] = "OrderView";
 
 }
 
@@ -17,8 +17,8 @@
                 <!-- title -->
                 <div class="d-md-flex">
                     <div>
-                        <h4 class="card-title">Top Selling Products</h4>
-                        <h5 class="card-subtitle">Overview of Top Selling Items</h5>
+                        <h4 class="card-title">Order</h4>
+                        <h5 class="card-subtitle">OverView</h5>
                     </div>
                 </div>
                 <!-- title -->
@@ -44,7 +44,7 @@
                                         <td>
                                             <div class="d-flex align-items-center">
                                                 <div class="m-r-10">
-                                                    <a class="btn btn-circle d-flex btn-info text-white"><img src=/store-image/@order.AppUser.Avatar /></a>
+                                                    <img src="~/admin/assets/images/users/avarta.jpg" alt="user" class="rounded-circle" width="31">
                                                 </div>
                                                 <div class="">
                                                     <h4 class="m-b-0 font-16">@order.FirstName @order.LastName</h4>
