@@ -523,7 +523,17 @@ namespace Ogani.Controllers
         public async Task<IActionResult> UpdateUser(AppUser user)
         {
             var u = await _userManager.FindByIdAsync(user.Id.ToString());
-            u.Avatar = await this.SaveFile(this.Request.Form.Files["avatar"]);
+            u.UserName = user.UserName;
+            u.Email = user.Email;
+            u.DateOfBirth = user.DateOfBirth;
+            u.FirstName = user.FirstName;
+            u.LastName = user.LastName;
+            u.PhoneNumber = user.PhoneNumber;
+
+            if (this.Request.Form.Files["avatar"] != null)
+            {
+                u.Avatar = await this.SaveFile(this.Request.Form.Files["avatar"]);
+            }
             await _userManager.UpdateAsync(u);
             return RedirectToAction(nameof(UpdateUser));
         }

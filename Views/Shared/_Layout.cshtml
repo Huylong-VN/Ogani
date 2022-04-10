@@ -32,10 +32,29 @@
         </div>
         <div class="humberger__menu__cart">
             <ul>
-                 <li><a asp-action='ShoppingCart'><i class="fa fa-shopping-bag"></i> @if (Context.Session.GetString("toTal") != null) { <span>@Context.Session.GetString("toTal") </span> } else {<span>0</span>}</a>
-                                        </li>
+                <li>
+                    <a asp-action='ShoppingCart'>
+                        <i class="fa fa-shopping-bag"></i> @if (Context.Session.GetString("toTal") != null)
+                        {
+                            <span>@Context.Session.GetString("toTal") </span>
+                        }
+                        else
+                        {
+                            <span>0</span>
+                        }
+                    </a>
+                </li>
             </ul>
-            <div class="header__cart__price">item: @if (Context.Session.GetString("toTal") != null) { <span>@Context.Session.GetString("toTal")$ </span> } else {<span>0$</span>}</div>
+            <div class="header__cart__price">
+                item: @if (Context.Session.GetString("toTal") != null)
+                {
+                    <span>@Context.Session.GetString("toTal")$ </span>
+                }
+                else
+                {
+                    <span>0$</span>
+                }
+            </div>
         </div>
         <div class="humberger__menu__widget">
             @if (User.Identity.IsAuthenticated)
@@ -65,7 +84,13 @@
                 <li><a asp-action='BlogView'>Blog</a></li>
                 @if (User.Identity.IsAuthenticated)
                 {
-                    <li><a style='color:red;box-shadow: 2px 2px 2px aliceblue;' href="/admin">Area Profile</a></li>
+                    <li>
+                        <a href="#">Member</a>
+                        <ul class="header__menu__dropdown">
+                            <li><a href="/home/profile">Profile</a></li>
+                            <li><a href="/home/changepassword">Change Password</a></li>
+                        </ul>
+                    </li>
                 }
                 @if (this.User.IsInRole("admin") || this.User.IsInRole("employee") && User.Identity.IsAuthenticated)
                 {
@@ -145,11 +170,17 @@
                                     <li><a asp-action='ShoppingCart'>Shoping Cart</a></li>
                                 </ul>
                             </li>
-                             <li><a asp-action='BlogView'>Blog</a></li>
-                              @if (User.Identity.IsAuthenticated)
-                                {
-                                    <li><a style='color:blue;box-shadow: 2px 2px 2px aliceblue;' href="/home/profile">Profile</a></li>
-                                }
+                            <li><a asp-action='BlogView'>Blog</a></li>
+                             @if (User.Identity.IsAuthenticated)
+                            {
+                                <li>
+                                    <a href="#">Member</a>
+                                    <ul class="header__menu__dropdown">
+                                        <li><a href="/home/profile">Profile</a></li>
+                                        <li><a href="/home/changepassword">Change Password</a></li>
+                                    </ul>
+                                </li>
+                            }
                             @if (this.User.IsInRole("admin") || this.User.IsInRole("employee") && User.Identity.IsAuthenticated)
                             {
                                 <li><a style='color:red;box-shadow: 2px 2px 2px aliceblue;' href="/admin">Area Manage</a></li>
@@ -160,9 +191,29 @@
                 <div class="col-lg-3">
                     <div class="header__cart">
                         <ul>
-                            <li><a asp-action='ShoppingCart'><i class="fa fa-shopping-bag"></i> @if (Context.Session.GetString("toTal") != null) { <span>@Context.Session.GetString("toTal") </span> } else {<span>0</span>}</a></li>
+                            <li>
+                                <a asp-action='ShoppingCart'>
+                                    <i class="fa fa-shopping-bag"></i> @if (Context.Session.GetString("toTal") != null)
+                                    {
+                                        <span>@Context.Session.GetString("toTal") </span>
+                                    }
+                                    else
+                                    {
+                                        <span>0</span>
+                                    }
+                                </a>
+                            </li>
                         </ul>
-                            <div class="header__cart__price">item: @if (Context.Session.GetString("toTalPrice") != null) { <span>@Context.Session.GetString("toTalPrice")$ </span> } else {<span>0$</span>}</div>
+                        <div class="header__cart__price">
+                            item: @if (Context.Session.GetString("toTalPrice") != null)
+                            {
+                                <span>@Context.Session.GetString("toTalPrice")$ </span>
+                            }
+                            else
+                            {
+                                <span>0$</span>
+                            }
+                        </div>
                     </div>
                 </div>
             </div>
@@ -252,5 +303,7 @@
     <script src="~/js/owl.carousel.min.js"></script>
     <script src="~/js/main.js"></script>
     <!-- Js Plugins -->
+
+     @RenderSection("Scripts", required: false);
 </body>
 </html>

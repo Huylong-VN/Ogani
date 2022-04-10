@@ -12,7 +12,9 @@ using Ogani.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 
 namespace Ogani.Controllers
@@ -22,9 +24,11 @@ namespace Ogani.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly OganiDbContext _dbContext;
         private readonly UserManager<AppUser> _userManager;
+        private readonly IStorageService _storageService;
 
-        public HomeController(ILogger<HomeController> logger, OganiDbContext dbContext, UserManager<AppUser> userManager)
+        public HomeController(ILogger<HomeController> logger, IStorageService storageService, OganiDbContext dbContext, UserManager<AppUser> userManager)
         {
+            _storageService = storageService;
             _userManager = userManager;
             _dbContext = dbContext;
             _logger = logger;
@@ -508,9 +512,49 @@ namespace Ogani.Controllers
             //cập nhật dữ liệu vào db
         }
 
-        public IActionResult Profile()
+        public async Task<IActionResult> Profile()
+        {
+            var user = await _userManager.GetUserAsync(User);
+            return View(user);
+        }
+
+        private async Task<string> SaveFile(IFormFile file)
+        {
+            var originalFileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
+            var fileName = $"{Guid.NewGuid()}{Path.GetExtension(originalFileName)}";
+            await _storageService.SaveFileAsync(file.OpenReadStream(), fileName);
+            return fileName;
+        }
+
+        [Authorize]
+        public async Task<IActionResult> UpdateProfile(AppUser user)
+        {
+            var userupdate = await _userManager.GetUserAsync(User);
+            userupdate.FirstName = user.FirstName;
+            userupdate.LastName = user.LastName;
+            userupdate.PhoneNumber = user.PhoneNumber;
+            if (Request.Form.Files["image"] != null)
+            {
+                if (userupdate.Avatar != null)
+                {
+                    await _storageService.DeleteFileAsync(userupdate.Avatar);
+                }
+                userupdate.Avatar = await SaveFile(Request.Form.Files["image"]);
+            }
+            await _userManager.UpdateAsync(userupdate);
+            return RedirectToAction(nameof(Profile));
+        }
+
+        [HttpGet]
+        public IActionResult ChangePassword()
         {
             return View();
+        }
+
+        public async Task<IdentityResult> ChangePasswordAsync(ChangePasswordModel model)
+        {
+            var user = await _userManager.GetUserAsync(User);
+            return await _userManager.ChangePasswordAsync(user, model.CurrentPassword, model.NewPassword);
         }
 
         public IActionResult Privacy()
