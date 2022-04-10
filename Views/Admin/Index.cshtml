@@ -20,8 +20,8 @@
                     <div class="ms-auto">
                         <div class="dl">
                             <form class='form-group' onsubmit='return false'>
-                                <h >Start Date</h><input type='date' id='startDate' required class='form-control' placeholder='StartDate' />
-                                <h >End Date</h><input type='date' id='endDate' required class='form-control' placeholder='EndDate' />
+                                <h>Start Date</h><input type='date' id='startDate' required class='form-control' placeholder='StartDate' />
+                                <h>End Date</h><input type='date' id='endDate' required class='form-control' placeholder='EndDate' />
                                 <button id='onStatic' class='btn btn-primary'>Submit</button>
                             </form>
                         </div>
@@ -55,6 +55,7 @@
                                     <th class="border-top-0">Email</th>
                                     <th class="border-top-0">Phone</th>
                                     <th class="border-top-0">UserName</th>
+                                    <th class="border-top-0">List Product</th>
                                     <th class="border-top-0">CreateAt</th>
                                     <th class="border-top-0">Method Payment</th>
                                     <th class="border-top-0">Status</th>
@@ -77,8 +78,14 @@
                                         <td>@order.Email</td>
                                         <td>@order.Phone</td>
                                         <td>@order.AppUser.UserName</td>
+                                        <td>
+                                            @foreach (var p in @order.ProductOrders)
+                                            {
+                                                <li>@p.Product.Name</li>
+                                            }
+                                        </td>
                                         <td>@order.CreateAt</td>
-                                        <td> 
+                                        <td>
                                             @{
                                                 if (order.Method == "0")
                                                 {
