@@ -412,7 +412,6 @@ namespace Ogani.Controllers
             };
             string amount = (int.Parse(or.Total) * 22839).ToString();
             string orderInfo = "Payment Product";
-            await _dbContext.Orders.AddAsync(or);
             List<Item> product = SessionHelper.GetObjectFromJson<List<Item>>(HttpContext.Session, "cart");
             foreach (var p in product)
             {
@@ -426,6 +425,8 @@ namespace Ogani.Controllers
 
             if (Request.Form["method"].Equals("0"))
             {
+                or.Status = false;
+                await _dbContext.Orders.AddAsync(or);
                 await _dbContext.SaveChangesAsync();
                 HttpContext.Session.Remove("cart");
                 HttpContext.Session.Remove("toTal");
@@ -479,6 +480,8 @@ namespace Ogani.Controllers
             string responseFromMomo = PaymentRequest.sendPaymentRequest(endpoint, message.ToString());
 
             JObject jmessage = JObject.Parse(responseFromMomo);
+            or.Status = true;
+            await _dbContext.Orders.AddAsync(or);
             await _dbContext.SaveChangesAsync();
             return Redirect(jmessage.GetValue("payUrl").ToString());
         }
