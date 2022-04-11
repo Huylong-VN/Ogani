@@ -237,7 +237,7 @@ namespace Ogani.Controllers
         }
 
         [HttpPost]
-        public async void AddToCart()
+        public async Task<IActionRestul> AddToCart()
         {
             Guid productId = new Guid(Request.Form["productId"]);
             int quantity = int.Parse(Request.Form["quantity"]);
@@ -272,7 +272,7 @@ namespace Ogani.Controllers
         }
 
         [HttpGet]
-        public async void AddToCart(Guid productId)
+        public async Task<IActionRestul> AddToCart(Guid productId)
         {
             if (SessionHelper.GetObjectFromJson<List<Item>>(HttpContext.Session, "cart") == null)
             {
