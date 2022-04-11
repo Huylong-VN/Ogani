@@ -237,7 +237,7 @@ namespace Ogani.Controllers
         }
 
         [HttpPost]
-        public async Void AddToCart()
+        public async void AddToCart()
         {
             Guid productId = new Guid(Request.Form["productId"]);
             int quantity = int.Parse(Request.Form["quantity"]);
@@ -269,7 +269,6 @@ namespace Ogani.Controllers
             HttpContext.Session.SetString("toTal", SessionHelper.GetObjectFromJson<List<Item>>(HttpContext.Session, "cart").Count.ToString());
 
             HttpContext.Session.SetString("toTalPrice", SessionHelper.GetObjectFromJson<List<Item>>(HttpContext.Session, "cart").Sum(x => (long)Convert.ToDouble(x.Product.CurrentPrice) * x.Quantity).ToString());
-
         }
 
         [HttpGet]
@@ -298,7 +297,6 @@ namespace Ogani.Controllers
             HttpContext.Session.SetString("toTal", SessionHelper.GetObjectFromJson<List<Item>>(HttpContext.Session, "cart").Count.ToString());
 
             HttpContext.Session.SetString("toTalPrice", SessionHelper.GetObjectFromJson<List<Item>>(HttpContext.Session, "cart").Sum(x => (long)Convert.ToDouble(x.Product.CurrentPrice) * x.Quantity).ToString());
-
         }
 
         private int isExist(Guid id)
