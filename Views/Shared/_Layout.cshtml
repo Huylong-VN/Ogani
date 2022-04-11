@@ -171,13 +171,14 @@
                                 </ul>
                             </li>
                             <li><a asp-action='BlogView'>Blog</a></li>
-                             @if (User.Identity.IsAuthenticated)
+                            @if (User.Identity.IsAuthenticated)
                             {
                                 <li>
                                     <a href="#">Member</a>
                                     <ul class="header__menu__dropdown">
                                         <li><a href="/home/profile">Profile</a></li>
                                         <li><a href="/home/changepassword">Change Password</a></li>
+                                        <li><a href="/home/yourorder">Your Order</a></li>
                                     </ul>
                                 </li>
                             }
@@ -303,7 +304,6 @@
     <script src="~/js/owl.carousel.min.js"></script>
     <script src="~/js/main.js"></script>
     <!-- Js Plugins -->
-
-     @RenderSection("Scripts", required: false);
+    @RenderSection("Scripts", required: false);
 </body>
 </html>
