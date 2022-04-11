@@ -269,6 +269,7 @@ namespace Ogani.Controllers
             HttpContext.Session.SetString("toTal", SessionHelper.GetObjectFromJson<List<Item>>(HttpContext.Session, "cart").Count.ToString());
 
             HttpContext.Session.SetString("toTalPrice", SessionHelper.GetObjectFromJson<List<Item>>(HttpContext.Session, "cart").Sum(x => (long)Convert.ToDouble(x.Product.CurrentPrice) * x.Quantity).ToString());
+             return Redirect(HttpContext.Request.Headers["Referer"].ToString());
         }
 
         [HttpGet]
@@ -297,6 +298,7 @@ namespace Ogani.Controllers
             HttpContext.Session.SetString("toTal", SessionHelper.GetObjectFromJson<List<Item>>(HttpContext.Session, "cart").Count.ToString());
 
             HttpContext.Session.SetString("toTalPrice", SessionHelper.GetObjectFromJson<List<Item>>(HttpContext.Session, "cart").Sum(x => (long)Convert.ToDouble(x.Product.CurrentPrice) * x.Quantity).ToString());
+            return Redirect(HttpContext.Request.Headers["Referer"].ToString());
         }
 
         private int isExist(Guid id)
