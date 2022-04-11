@@ -237,7 +237,7 @@ namespace Ogani.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddToCart()
+        public async Void AddToCart()
         {
             Guid productId = new Guid(Request.Form["productId"]);
             int quantity = int.Parse(Request.Form["quantity"]);
@@ -270,11 +270,10 @@ namespace Ogani.Controllers
 
             HttpContext.Session.SetString("toTalPrice", SessionHelper.GetObjectFromJson<List<Item>>(HttpContext.Session, "cart").Sum(x => (long)Convert.ToDouble(x.Product.CurrentPrice) * x.Quantity).ToString());
 
-            return Redirect(HttpContext.Request.Headers["Referer"].ToString());
         }
 
         [HttpGet]
-        public async Task<IActionResult> AddToCart(Guid productId)
+        public async void AddToCart(Guid productId)
         {
             if (SessionHelper.GetObjectFromJson<List<Item>>(HttpContext.Session, "cart") == null)
             {
@@ -300,7 +299,6 @@ namespace Ogani.Controllers
 
             HttpContext.Session.SetString("toTalPrice", SessionHelper.GetObjectFromJson<List<Item>>(HttpContext.Session, "cart").Sum(x => (long)Convert.ToDouble(x.Product.CurrentPrice) * x.Quantity).ToString());
 
-            return Redirect(HttpContext.Request.Headers["Referer"].ToString());
         }
 
         private int isExist(Guid id)
@@ -316,7 +314,7 @@ namespace Ogani.Controllers
             return -1;
         }
 
-        public IActionResult RemoveFromCart(Guid id)
+        public void RemoveFromCart(Guid id)
         {
             List<Item> cart = SessionHelper.GetObjectFromJson<List<Item>>(HttpContext.Session, "cart");
             int index = isExist(id);
@@ -325,7 +323,6 @@ namespace Ogani.Controllers
             HttpContext.Session.SetString("toTal", SessionHelper.GetObjectFromJson<List<Item>>(HttpContext.Session, "cart").Count.ToString());
 
             HttpContext.Session.SetString("toTalPrice", SessionHelper.GetObjectFromJson<List<Item>>(HttpContext.Session, "cart").Sum(x => (long)Convert.ToDouble(x.Product.CurrentPrice) * x.Quantity).ToString());
-            return RedirectToAction(nameof(ShoppingCart));
         }
 
         public IActionResult ShoppingCart()
