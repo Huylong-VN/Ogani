@@ -557,6 +557,37 @@ namespace Ogani.Controllers
             return await _userManager.ChangePasswordAsync(user, model.CurrentPassword, model.NewPassword);
         }
 
+
+        public async Task<IActionResult> YourOrder(string keyword, Guid CategoryId, string sorting = null, int p = 1, int s = 6)
+        {
+            var userId = await _userManager.GetUserAsync(User);
+            var query = _dbContext.Orders.Include(x => x.ProductOrders).ThenInclude(x => x.Product).
+                Where(x => x.UserId.Equals(userId.Id)).AsQueryable();
+            if (!string.IsNullOrWhiteSpace(keyword))
+            {
+                query = query.Where(x => x.Address.Contains(keyword) || x.Email.Contains(keyword) || x.FirstName.Contains(keyword) ||
+                x.LastName.Contains(keyword) || x.Phone.Contains(keyword));
+            }
+            var result = await query.OrderByDescending(x => x.CreateAt).Skip((p - 1) * s).Take(s)
+                .ToListAsync();
+            ViewBag.List = result;
+            var returnvalue = new PagedResultBase()
+            {
+                PageIndex = p,
+                Keyword = keyword,
+                PageSize = s,
+                TotalRecords = query.Count()
+            };
+            return View(returnvalue);
+        }
+        
+        public async Task<IActionResult> RemoveOrder(Guid Id)
+        {
+            var order = await _dbContext.Orders.FindAsync(Id);
+            _dbContext.Orders.Remove(order);
+            await _dbContext.SaveChangesAsync();
+            return RedirectToAction(nameof(YourOrder));
+        }
         public IActionResult Privacy()
         {
             return View();

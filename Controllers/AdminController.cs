@@ -89,14 +89,15 @@ namespace Ogani.Controllers
             DateTime startDate = DateTime.Parse(Request.Form["startDate"]);
             DateTime endDate = DateTime.Parse(Request.Form["endDate"]);
             DataTable dt = new DataTable("Grid");
-            dt.Columns.AddRange(new DataColumn[8] { new DataColumn("FullName"),
+            dt.Columns.AddRange(new DataColumn[9] { new DataColumn("FullName"),
                                         new DataColumn("Email"),
                                         new DataColumn("Phone"),
                                         new DataColumn("UserName"),
                                         new DataColumn("List Product"),
                                         new DataColumn("CreateAt"),
                                         new DataColumn("Method Payment"),
-                                        new DataColumn("Status")});
+                                        new DataColumn("Status"),
+                                        new DataColumn("Total")});
 
             var orders = _dbContext.Orders.Include(x => x.ProductOrders).ThenInclude(x => x.Product).
                 Include(x => x.AppUser).Where(x => x.CreateAt.Date >= startDate.Date && x.CreateAt.Date <= endDate.Date)
@@ -106,7 +107,7 @@ namespace Ogani.Controllers
             {
                 dt.Rows.Add(order.FirstName + order.LastName, order.Email, order.Phone,
                     order.AppUser.UserName,String.Join(",", order.ProductOrders.Select(x => x.Product.Name).ToList()),
-                    order.CreateAt, order.Method == "0" ? "Delivery" : "Momo", order.Status == false ? "During Processing" : "Done");
+                    order.CreateAt, order.Method == "0" ? "Delivery" : "Momo", order.Status == false ? "During Processing" : "Done",order.Total);
             }
 
             using (XLWorkbook wb = new XLWorkbook())
