@@ -12,6 +12,7 @@ using Ogani.Data;
 using Ogani.Models;
 using Ogani.Repository;
 using Ogani.Service;
+using Ogani.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -95,7 +96,6 @@ namespace Ogani
                 app.UseHsts();
                 app.UseDeveloperExceptionPage();
             }
-          
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
@@ -104,6 +104,7 @@ namespace Ogani
             app.UseAuthentication();
             app.UseAuthorization();
             app.UseSession();
+            app.UseMyMiddleware();
 
             app.UseEndpoints(endpoints =>
             {

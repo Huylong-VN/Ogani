@@ -14,6 +14,16 @@ namespace Ogani.Data
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            builder.Entity<Page>(x =>
+            {
+                x.ToTable("Pages");
+                x.HasData(new Page()
+                {
+                    Id = new Guid("3d5a6cad-25cd-4aef-9d16-3f22d6d5d717"),
+                    Name = "Home Page",
+                    TotalView = 0
+                });
+            });
             builder.Entity<Blog>(x =>
             {
                 x.ToTable("Blogs");
@@ -168,5 +178,6 @@ namespace Ogani.Data
         public DbSet<ProductOrder> ProductOrders { get; set; }
         public DbSet<Supplier> Suppliers { get; set; }
         public DbSet<Blog> Blogs { get; set; }
+        public DbSet<Page> Pages { get; set; }
     }
 }

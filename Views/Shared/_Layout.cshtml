@@ -285,8 +285,17 @@
                     <div class="footer__copyright">
                         <div class="footer__copyright__text w-100">
                             <p class=" text-center">
-                                Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved
+                                Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved 
                             </p>
+                            <p>Total Visistor: 
+                                @if (Context.Session.GetString("TotalVisistor") != null)
+                        {
+                            <span>@Context.Session.GetString("TotalVisistor") </span>
+                        }
+                        else
+                        {
+                            <span>0</span>
+                        }</p>
                         </div>
                         <div class="footer__copyright__payment"><img src="~/image/payment-item.png" alt=""></div>
                     </div>

@@ -557,7 +557,6 @@ namespace Ogani.Controllers
             return await _userManager.ChangePasswordAsync(user, model.CurrentPassword, model.NewPassword);
         }
 
-
         public async Task<IActionResult> YourOrder(string keyword, Guid CategoryId, string sorting = null, int p = 1, int s = 6)
         {
             var userId = await _userManager.GetUserAsync(User);
@@ -580,7 +579,7 @@ namespace Ogani.Controllers
             };
             return View(returnvalue);
         }
-        
+
         public async Task<IActionResult> RemoveOrder(Guid Id)
         {
             var order = await _dbContext.Orders.FindAsync(Id);
@@ -588,6 +587,7 @@ namespace Ogani.Controllers
             await _dbContext.SaveChangesAsync();
             return RedirectToAction(nameof(YourOrder));
         }
+
         public IActionResult Privacy()
         {
             return View();
