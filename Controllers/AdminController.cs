@@ -107,7 +107,7 @@ namespace Ogani.Controllers
             {
                 dt.Rows.Add(order.FirstName + order.LastName, order.Email, order.Phone,
                     order.AppUser.UserName, String.Join(",", order.ProductOrders.Select(x => x.Product.Name).ToList()),
-                    order.CreateAt, order.Method == "0" ? "Delivery" : "Momo", order.Status == false ? "During Processing" : "Done", order.Total);
+                    order.CreateAt, order.Method == "0" ? "Delivery" : "Momo", order.Status == false ? "During Processing" : "Done", order.Total+"$");
             }
 
             using (XLWorkbook wb = new XLWorkbook())
