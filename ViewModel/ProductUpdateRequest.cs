@@ -14,5 +14,6 @@ namespace Ogani.ViewModel
         public string ReducePrice { set; get; }
         public IFormFile Image { set; get; }
         public Guid CategoryId { set; get; }
+        public int Rate { set; get; }
     }
 }
