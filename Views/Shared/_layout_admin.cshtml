@@ -196,8 +196,8 @@
                         <div class="d-flex align-items-center">
                             <nav aria-label="breadcrumb">
                                 <ol class="breadcrumb">
-                                    <li class="breadcrumb-item"><a href="#">Home</a></li>
-                                    <li class="breadcrumb-item active" aria-current="page">@ViewData["page"]</li>
+                                    <li class="breadcrumb-item"><a href="/admin">Home</a></li>
+                                    <li class="breadcrumb-item active" aria-current="page"><a href="@ViewData["linkSub"]">@ViewData["page"]</a></li>
                                     @if (ViewData["expand"] != null)
                                     {
                                         <li class='breadcrumb-item active' aria-current='page'>@ViewData["expand"]</li>

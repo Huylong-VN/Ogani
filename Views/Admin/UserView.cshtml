@@ -3,8 +3,7 @@
 *@
 @{
     Layout = "~/Views/Shared/_layout_admin.cshtml";
-    ViewData["page"] = "Product";
-    ViewData["Expand"] = "UserView";
+    ViewData["page"] = "Users";
 }
 
 <!-- ============================================================== -->
@@ -18,7 +17,6 @@
                     <div>
                         <h4 class="card-title">User</h4>
                         <h5 class="card-subtitle">Overview of User</h5>
-                        <button class='btn btn-primary'>Create</button>
                         @if (TempData["msg"] != null)
                         {
                             <div class="alert alert-primary" role="alert">

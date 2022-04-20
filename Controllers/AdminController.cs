@@ -20,7 +20,7 @@ using System.Threading.Tasks;
 
 namespace Ogani.Controllers
 {
-    [Authorize(Roles = "admin")]
+    [Authorize(Roles = "admin,employee")]
     public class AdminController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -539,7 +539,7 @@ namespace Ogani.Controllers
                 u.Avatar = await this.SaveFile(this.Request.Form.Files["avatar"]);
             }
             await _userManager.UpdateAsync(u);
-            return RedirectToAction(nameof(UpdateUser));
+            return RedirectToAction(nameof(UserView));
         }
 
         // blog manage
@@ -627,7 +627,7 @@ namespace Ogani.Controllers
             _dbContext.Blogs.Update(result);
 
             await _dbContext.SaveChangesAsync();
-            return RedirectToAction(nameof(UpdateBlog));
+            return RedirectToAction(nameof(BlogView));
         }
 
         public async Task<IActionResult> DeleteBlog(Guid Id)

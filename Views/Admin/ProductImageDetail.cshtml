@@ -4,7 +4,8 @@
 @{
     Layout = "~/Views/Shared/_layout_admin.cshtml";
     ViewData["page"] = "Product";
-    ViewData["Expand"] = "ViewList";
+    ViewData["Expand"] = "ProductImageDetail";
+    ViewData["linkSub"] = "/admin/ProductView";
 
 }
 <a class='btn btn-primary mb-3' asp-action='ProductImageDetailCreate' asp-route-Id=@ViewBag.Id>Create</a>
