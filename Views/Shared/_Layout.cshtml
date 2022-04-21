@@ -288,15 +288,21 @@
                             <p class=" text-center">
                                 Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved 
                             </p>
-                            <p>Total Visistor: 
+                            <p>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
+                                    <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z" />
+                                    <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z" />
+                                </svg>
+                                Total Visistor:
                                 @if (Context.Session.GetString("TotalVisistor") != null)
-                        {
-                            <span>@Context.Session.GetString("TotalVisistor") </span>
-                        }
-                        else
-                        {
-                            <span>0</span>
-                        }</p>
+                                {
+                                    <span>@Context.Session.GetString("TotalVisistor") </span>
+                                }
+                                else
+                                {
+                                    <span>0</span>
+                                }
+                            </p>
                         </div>
                         <div class="footer__copyright__payment"><img src="~/image/payment-item.png" alt=""></div>
                     </div>
