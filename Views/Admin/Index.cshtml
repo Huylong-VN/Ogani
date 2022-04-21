@@ -3,6 +3,7 @@
 *@
 @{
     Layout = "~/Views/Shared/_layout_admin.cshtml";
+    ViewData["page"] = "Dashboard";
 }
 <!-- Table -->
 <!-- ============================================================== -->
@@ -64,52 +65,52 @@
                             <tbody>
                                 @foreach (var order in ViewBag.Orders)
                                 {
-                                    <tr>
-                                        <td>
-                                            <div class="d-flex align-items-center">
-                                                <div class="m-r-10">
-                                                    <img src="~/admin/assets/images/users/avarta.jpg" alt="user" class="rounded-circle" width="31">
-                                                </div>
-                                                <div class="">
-                                                    <h4 class="m-b-0 font-16">@order.FirstName @order.LastName</h4>
-                                                </div>
+                                <tr>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <div class="m-r-10">
+                                                <img src="~/admin/assets/images/users/avarta.jpg" alt="user" class="rounded-circle" width="31">
                                             </div>
-                                        </td>
-                                        <td>@order.Email</td>
-                                        <td>@order.Phone</td>
-                                        <td>@order.AppUser.UserName</td>
-                                        <td>
-                                            @foreach (var p in @order.ProductOrders)
+                                            <div class="">
+                                                <h4 class="m-b-0 font-16">@order.FirstName @order.LastName</h4>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>@order.Email</td>
+                                    <td>@order.Phone</td>
+                                    <td>@order.AppUser.UserName</td>
+                                    <td>
+                                        @foreach (var p in @order.ProductOrders)
                                             {
-                                                <li>@p.Product.Name</li>
+                                        <li>@p.Product.Name</li>
                                             }
-                                        </td>
-                                        <td>@order.CreateAt</td>
-                                        <td>
-                                            @{
+                                    </td>
+                                    <td>@order.CreateAt</td>
+                                    <td>
+                                        @{
                                                 if (order.Method == "0")
                                                 {
-                                                    <p>Delivery</p>
+                                            <p>Delivery</p>
                                                 }
                                                 else
                                                 {
-                                                    <p>Momo</p>
+                                            <p>Momo</p>
                                                 }
-                                            }
-                                        </td>
-                                        <td>
-                                            @{
+                                        }
+                                    </td>
+                                    <td>
+                                        @{
                                                 if (order.Status == false)
                                                 {
-                                                    <p>During processing</p>
+                                            <p>During processing</p>
                                                 }
                                                 else
                                                 {
-                                                    <p>Done</p>
+                                            <p>Done</p>
                                                 }
-                                            }
-                                        </td>
-                                    </tr>
+                                        }
+                                    </td>
+                                </tr>
                                 }
                             </tbody>
                         </table>
@@ -135,59 +136,59 @@
 <!-- ============================================================== -->
 <!-- Table -->
 @section Scripts{
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.0/moment.min.js" integrity="sha512-Izh34nqeeR7/nwthfeE0SI3c8uhFSnqxV0sI9TvTcXiFJkMd6fB644O64BRq2P/LA/+7eRvCw4GmLsXksyTHBg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script>
-       $("#onStatic").click((e) => {
-         const startDate = $("#startDate").val()
-         const endDate = $("#endDate").val()
-         if (startDate && endDate) {
-           if (document.getElementById('myChart')) {
-                  $('#myChart').replaceWith($('<canvas id="myChart" height="320px"></canvas>'));
-             }
-             getReport(startDate, endDate);
-         }
-     })
-
-    function getReport(startDate, endDate) {
-        $.ajax({
-            url: `/admin/getreport?startDate=${startDate}&endDate=${endDate}`,
-            type: 'get',
-            success: function (response) {
-                console.log(response)
-                RegisterChartProduct(response)
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.0/moment.min.js" integrity="sha512-Izh34nqeeR7/nwthfeE0SI3c8uhFSnqxV0sI9TvTcXiFJkMd6fB644O64BRq2P/LA/+7eRvCw4GmLsXksyTHBg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        $("#onStatic").click((e) => {
+            const startDate = $("#startDate").val()
+            const endDate = $("#endDate").val()
+            if (startDate && endDate) {
+                if (document.getElementById('myChart')) {
+                    $('#myChart').replaceWith($('<canvas id="myChart" height="320px"></canvas>'));
+                }
+                getReport(startDate, endDate);
             }
         })
-    }
-    getReport(moment().subtract(30, "days").format('MM-DD-YYYY'), moment().format('MM-DD-YYYY'));
 
-    var lsLabel = [];
-    var LsDataSource = [];
+        function getReport(startDate, endDate) {
+            $.ajax({
+                url: `/admin/getreport?startDate=${startDate}&endDate=${endDate}`,
+                type: 'get',
+                success: function (response) {
+                    console.log(response)
+                    RegisterChartProduct(response)
+                }
+            })
+        }
+        getReport(moment().subtract(30, "days").format('MM-DD-YYYY'), moment().format('MM-DD-YYYY'));
 
-    function RegisterChartProduct(lsData) {
-        lsLabel = [];
-        LsDataSource = [];
-        lsData.map((item) => {
-            lsLabel.push(item.createAt);
-            LsDataSource.push(item.total)
-        })
+        var lsLabel = [];
+        var LsDataSource = [];
 
-        const ctx = document.getElementById('myChart');
+        function RegisterChartProduct(lsData) {
+            lsLabel = [];
+            LsDataSource = [];
+            lsData.map((item) => {
+                lsLabel.push(item.createAt);
+                LsDataSource.push(item.total)
+            })
 
-        var barChartData = {
-            labels: lsLabel,
-            datasets: [{
-                label: "Order statistics",
-                backgroundColor: "#0b9663",
-                borderWidth: 1,
-                data: LsDataSource
-            }]
-        };
-        var myBarChart = new Chart(ctx, {
-            type: 'bar',
-            data: barChartData
-        })
-    }
+            const ctx = document.getElementById('myChart');
 
-</script>
+            var barChartData = {
+                labels: lsLabel,
+                datasets: [{
+                    label: "Order statistics",
+                    backgroundColor: "#0b9663",
+                    borderWidth: 1,
+                    data: LsDataSource
+                }]
+            };
+            var myBarChart = new Chart(ctx, {
+                type: 'bar',
+                data: barChartData
+            })
+        }
+
+    </script>
 }

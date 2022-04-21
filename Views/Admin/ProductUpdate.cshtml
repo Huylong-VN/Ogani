@@ -1,12 +1,16 @@
 ﻿@model Ogani.ViewModel.ProductUpdateRequest
 @{
-    Layout = "~/Views/Shared/_layout_admin.cshtml"; ViewData["page"] = "Product";
-    ViewData["Expand"] = "Product Creat";
+
+    Layout = "~/Views/Shared/_layout_admin.cshtml";
+    ViewData["page"] = "Product";
+  
+    ViewData["linkSub"] = "/admin/ProductView";
+
 }
 
-<h1>ProductCreate</h1>
+<h1>Product Create</h1>
 
-<h4>ProductCreaterequest</h4>
+@*<h4>Product Create Request</h4>*@
 <hr />
 <div class="row">
     <div class="col-md-12">
@@ -47,7 +51,7 @@
                 <input asp-for="CurrentPrice" class="form-control" />
                 <span asp-validation-for="CurrentPrice" class="text-danger"></span>
             </div>
-              <div class="form-group">
+            <div class="form-group">
                 <label asp-for="Rate" class="control-label"></label>
                 <input asp-for="Rate" class="form-control" />
                 <span asp-validation-for="Rate" class="text-danger"></span>
@@ -70,7 +74,7 @@
     <a asp-action="ProductView">Back to List</a>
 </div>
 @section Scripts{
-<script>
+    <script>
             class MyUploadAdapter {
                 constructor( loader ) {
                     // The file loader instance to use during the upload.
@@ -203,5 +207,5 @@
             console.log( error );
         } );
 
-</script>
+    </script>
 }
