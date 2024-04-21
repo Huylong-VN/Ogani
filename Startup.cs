@@ -45,14 +45,12 @@ namespace Ogani
 
             services.Configure<IdentityOptions>(options =>
             {
-                options.Password.RequiredLength = 5;
+                options.Password.RequiredLength = 2;
                 options.Password.RequiredUniqueChars = 1;
                 options.Password.RequireDigit = false;
                 options.Password.RequireLowercase = false;
                 options.Password.RequireNonAlphanumeric = false;
                 options.Password.RequireUppercase = false;
-
-                options.SignIn.RequireConfirmedEmail = true;
 
                 options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(1);
                 options.Lockout.MaxFailedAccessAttempts = 3;

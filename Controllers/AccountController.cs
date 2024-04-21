@@ -45,7 +45,7 @@ namespace Ogani.Controllers
                 }
 
                 ModelState.Clear();
-                return RedirectToAction("ConfirmEmail", new { email = userModel.Email });
+                return RedirectToAction("Login");
             }
 
             return View(userModel);

@@ -47,10 +47,10 @@ namespace Ogani.Repository
                 UserName = userModel.Email
             };
             var result = await _userManager.CreateAsync(user, userModel.Password);
-            if (result.Succeeded)
-            {
-                await GenerateEmailConfirmationTokenAsync(user);
-            }
+            // if (result.Succeeded)
+            // {
+            //     await GenerateEmailConfirmationTokenAsync(user);
+            // }
             return result;
         }
 
